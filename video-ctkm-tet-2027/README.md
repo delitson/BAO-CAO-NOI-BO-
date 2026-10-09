@@ -1,5 +1,16 @@
 # Video CTKM Tết 2027 – "Mua ROSTAR – Quà thả ga" (dành cho Đại lý)
 
+## Bản 2 (mới nhất): `ROSTAR_MuaRostar_QuaThaGa_DaiLy_9x16_v2.mp4` – ~2:15
+Nguồn: `motion-v2/` (độ dài giọng đọc ở `motion-v2/vo.js`), âm thanh `audio/mix2.m4a`.
+Giọng đọc "Đức" tốc độ 1.05 và tăng thêm 8% khi ghép. Phát âm: ROSTAR = "Rốt-ta", KLV = "Ka Lờ Vê".
+
+14 cảnh: mở đầu → tên chương trình → chương trình tri ân khách hàng xưởng (ROSTAR → Đại lý → Xưởng)
+→ 20 triệu = 1 điểm + 5 phiếu → mỗi đơn từ 4 triệu phát 1 phiếu cho xưởng → giải thưởng → xưởng mở quà 3 bước
+→ bậc thưởng đại lý → 1–1,5% doanh số → biên lợi nhuận ổn định so với hàng thịnh hành → các bên cùng có lợi
+→ đại lý cần thực hiện → lưu ý → hotline.
+
+## Bản 1: `ROSTAR_MuaRostar_QuaThaGa_DaiLy_9x16.mp4` – ~1:30 (nguồn `motion/`)
+
 - **Thành phẩm:** `ROSTAR_MuaRostar_QuaThaGa_DaiLy_9x16.mp4` (1080×1920, 30fps, ~1:30)
 - **Giọng đọc:** Topview TTS, giọng nam "Đức" (tiếng Việt), tốc độ 0.95
 - **Nhạc nền:** Topview Music (không lời), tự giảm âm lượng khi có giọng đọc
