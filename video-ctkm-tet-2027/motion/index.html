@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>ROSTAR – Mua ROSTAR Quà Thả Ga</title>
+<style>
+  @font-face { font-family: 'Anton'; src: url('/root/.fonts/Anton-Regular.ttf'); }
+  :root{
+    --green:#1F4434; --green2:#173327; --gold:#E7AA2E; --orange:#EF6A12;
+    --cream:#F7F0E3; --paper:#FFF7EC; --ink:#1B1B1B; --sand:#F2DC96; --mute:#5E6F66;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+  #stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:var(--green);
+    font-family:'Be Vietnam Pro',sans-serif;color:var(--ink)}
+  .abs{position:absolute}
+  .full{position:absolute;inset:0}
+  .row{left:0;right:0;text-align:center}
+  .anton{font-family:'Anton',sans-serif;font-weight:400;line-height:1.08;letter-spacing:1px}
+  .mono{font-family:'DejaVu Sans Mono',monospace;font-weight:700;letter-spacing:6px}
+  .bg{position:absolute;inset:0}
+  .dots{position:absolute;inset:0;opacity:.07;
+    background-image:radial-gradient(currentColor 1.6px, transparent 1.7px);background-size:22px 22px}
+  .wipe{position:absolute;inset:0;clip-path:circle(0px at 540px 960px)}
+  .scene{position:absolute;inset:0;opacity:0;transform-origin:540px 960px}
+  .pill{background:var(--paper);border-radius:999px;display:flex;align-items:center;justify-content:center;gap:34px;
+    box-shadow:0 14px 0 rgba(0,0,0,.18)}
+  .pill img{display:block}
+  .pill .sep{width:4px;height:90px;background:#d8cbb7;border-radius:2px}
+  .stamp{border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    box-shadow:0 10px 0 rgba(0,0,0,.25)}
+  .card{background:#fff;border:5px solid var(--ink);border-radius:34px;box-shadow:10px 12px 0 var(--ink)}
+  .chip{border-radius:26px;display:flex;align-items:center;justify-content:center}
+  .gift{background:#fff;border:5px solid var(--ink);border-radius:30px;box-shadow:8px 10px 0 var(--ink);
+    display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:20px 14px 22px}
+  .gift .im{height:190px;display:flex;align-items:center;justify-content:center}
+  .gift .im img{max-height:190px;max-width:380px}
+  .gift .lb{font-family:'Anton';font-size:46px;line-height:1.1;text-align:center}
+  .gift .lb b{color:var(--orange);font-weight:400}
+  .bar{position:absolute;bottom:0;border:5px solid var(--ink);border-bottom:none;border-radius:26px 26px 0 0;
+    display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:26px;overflow:hidden}
+  .step{display:flex;align-items:center;gap:30px;padding:30px 34px}
+  .num{flex:none;width:118px;height:118px;border-radius:50%;background:var(--green);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-family:'DejaVu Sans Mono';font-weight:700;font-size:50px}
+  .note{display:flex;gap:24px;align-items:flex-start;font-size:44px;line-height:1.35;font-weight:600}
+  .note .ic{font-size:52px;line-height:1.2;flex:none;width:70px;text-align:center}
+  .progress{position:absolute;left:90px;right:90px;bottom:120px;height:8px;border-radius:4px;background:rgba(255,255,255,.18);overflow:hidden}
+  .progress i{display:block;height:100%;width:0;background:var(--gold);border-radius:4px}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="bg" id="bgBase"></div>
+  <div class="wipe" id="wipe"></div>
+  <div class="dots" id="dots"></div>
+
+  <!-- ============ SCENE 1: MỞ ĐẦU ============ -->
+  <div class="scene" id="s1">
+    <div class="abs pill" id="s1pill" style="left:150px;top:470px;width:780px;height:200px">
+      <img src="../assets/logo_rostar.png" style="height:118px">
+      <div class="sep"></div>
+      <img src="../assets/logo_klv.png" style="height:96px">
+    </div>
+    <div class="abs row" id="s1a" style="top:800px;font-size:58px;font-weight:600;color:var(--cream)">Kính gửi</div>
+    <div class="abs row anton" id="s1b" style="top:880px;font-size:200px;color:var(--gold)">QUÝ ĐẠI LÝ</div>
+    <div class="abs row anton" id="s1c" style="top:1120px;font-size:96px;color:var(--cream);letter-spacing:8px">ROSTAR MIỀN TRUNG</div>
+    <div class="abs stamp" id="s1stamp" style="left:360px;top:1330px;width:360px;height:360px;background:var(--gold);border:8px solid #c48c1c">
+      <div class="mono" style="font-size:30px;color:#3a2a06">DÀNH CHO</div>
+      <div class="anton" style="font-size:112px;color:var(--green2);line-height:1">ĐẠI LÝ</div>
+      <div class="mono" style="font-size:28px;color:#3a2a06">★ TẾT 2027 ★</div>
+    </div>
+  </div>
+
+  <!-- ============ SCENE 2: TÊN CHƯƠNG TRÌNH ============ -->
+  <div class="scene" id="s2">
+    <div class="abs row anton" id="s2title" style="top:360px;font-size:250px;color:var(--gold)">THÔNG BÁO</div>
+    <div class="abs row" id="s2sub" style="top:700px;font-size:46px;font-weight:800;letter-spacing:12px;color:var(--cream)">CHƯƠNG TRÌNH</div>
+    <div class="abs row anton" style="top:780px;font-size:170px;color:var(--cream)">
+      <span id="s2w1" style="display:inline-block">MUA</span> <span id="s2w2" style="display:inline-block">ROSTAR</span>
+    </div>
+    <div class="abs row anton" style="top:980px;font-size:190px;color:var(--gold)">
+      <span id="s2w3" style="display:inline-block">QUÀ</span> <span id="s2w4" style="display:inline-block">THẢ</span> <span id="s2w5" style="display:inline-block">GA</span>
+    </div>
+    <div class="abs row" id="s2tl" style="top:1320px;font-size:40px;font-weight:700;letter-spacing:10px;color:var(--gold)">THỜI GIAN</div>
+    <div class="abs chip anton" id="s2d1" style="left:70px;top:1400px;width:400px;height:150px;background:var(--cream);color:var(--green);font-size:84px">10.10.2026</div>
+    <div class="abs" id="s2line" style="left:480px;top:1471px;width:120px;height:8px;background:var(--gold);transform-origin:0 50%"></div>
+    <div class="abs" id="s2arrow" style="left:588px;top:1455px;width:0;height:0;border-left:30px solid var(--gold);border-top:20px solid transparent;border-bottom:20px solid transparent"></div>
+    <div class="abs chip anton" id="s2d2" style="left:610px;top:1400px;width:400px;height:150px;background:var(--gold);color:var(--green2);font-size:84px">25.01.2027</div>
+    <div class="abs row" id="s2note" style="top:1600px;font-size:40px;font-weight:600;color:var(--cream);opacity:.9">Nhận giải đến hết 28.01.2027</div>
+  </div>
+
+  <!-- ============ SCENE 3: XƯỞNG NHẬN PHIẾU ============ -->
+  <div class="scene" id="s3">
+    <div class="abs row" id="s3k" style="top:220px;font-size:44px;font-weight:800;letter-spacing:10px;color:#fff">CHƯƠNG TRÌNH DÀNH CHO</div>
+    <div class="abs" id="s3h" style="left:90px;top:290px;width:900px;height:170px;background:var(--ink);border-radius:90px;display:flex;align-items:center;justify-content:center">
+      <span class="anton" style="font-size:104px;color:var(--cream);white-space:nowrap">KHÁCH HÀNG XƯỞNG</span>
+    </div>
+    <div class="abs card" id="s3inv" style="left:150px;top:560px;width:780px;height:520px;padding:40px 54px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span class="anton" style="font-size:70px">HÓA ĐƠN</span>
+        <span class="mono" style="font-size:26px;color:#777">ROSTAR · KLV</span>
+      </div>
+      <div style="height:4px;background:var(--ink);margin:18px 0 22px"></div>
+      <div style="display:flex;justify-content:space-between;font-size:40px;font-weight:600;color:#444;margin-bottom:12px"><span>Hàng ROSTAR</span><span style="letter-spacing:4px">· · · · · ·</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:40px;font-weight:600;color:#444"><span>Hàng KLV</span><span style="letter-spacing:4px">· · · · · ·</span></div>
+      <div style="height:3px;border-top:4px dashed #bbb;margin:26px 0 14px"></div>
+      <div style="font-size:34px;font-weight:800;letter-spacing:6px;color:#666">TỔNG TIỀN HÀNG TỪ</div>
+      <div class="anton" id="s3cnt" style="font-size:128px;color:var(--orange);line-height:1.05">4.000.000đ</div>
+    </div>
+    <div class="abs" id="s3arr" style="left:510px;top:1110px;width:60px;height:110px">
+      <div style="position:absolute;left:24px;top:0;width:12px;height:80px;background:#fff;border-radius:6px"></div>
+      <div style="position:absolute;left:0;top:70px;border-top:40px solid #fff;border-left:30px solid transparent;border-right:30px solid transparent"></div>
+    </div>
+    <div class="abs" id="s3tix" style="left:170px;top:1240px;width:740px;height:330px;transform-origin:50% 50%">
+      <div style="position:absolute;inset:0;background:var(--paper);border-radius:30px;border:5px solid var(--ink);box-shadow:10px 12px 0 var(--ink);overflow:hidden">
+        <div style="position:absolute;left:0;top:0;bottom:0;width:120px;background:var(--orange);border-right:5px dashed var(--ink)"></div>
+        <div class="mono" style="position:absolute;left:12px;top:150px;transform:rotate(-90deg);transform-origin:50px 0;font-size:24px;color:#fff;letter-spacing:4px;white-space:nowrap">TẤM VÉ</div>
+        <div style="position:absolute;left:150px;right:20px;top:36px;text-align:center">
+          <div class="anton" style="font-size:150px;color:var(--orange);line-height:1.1;white-space:nowrap">01 PHIẾU</div>
+          <div class="anton" style="font-size:64px;color:var(--ink);letter-spacing:6px;margin-top:0">MỞ QUÀ</div>
+        </div>
+      </div>
+    </div>
+    <div class="abs row" id="s3cap" style="top:1640px;font-size:42px;font-weight:700;color:#fff;line-height:1.35">Mỗi <b style="color:var(--ink);background:var(--cream);padding:0 12px;border-radius:10px">4 triệu</b> tiền hàng ROSTAR/KLV<br>= 1 phiếu mở quà</div>
+  </div>
+
+  <!-- ============ SCENE 4: GIẢI THƯỞNG ============ -->
+  <div class="scene" id="s4">
+    <div class="abs" id="s4pill" style="left:160px;top:210px;width:760px;height:150px;background:var(--ink);border-radius:80px;display:flex;align-items:center;justify-content:center">
+      <span class="anton" style="font-size:92px;color:var(--gold)">100% PHIẾU CÓ QUÀ</span>
+    </div>
+    <div class="abs" id="s4box" style="left:70px;top:420px;width:940px;height:420px;background:var(--green);border:5px solid var(--ink);border-radius:36px;box-shadow:10px 12px 0 var(--ink);text-align:center;padding-top:40px">
+      <div style="font-size:50px;font-weight:800;letter-spacing:12px;color:var(--gold)">GIẢI ĐẶC BIỆT</div>
+      <div class="anton" id="s4cnt" style="font-size:210px;color:var(--cream);line-height:1.1">5.000.000<span style="color:var(--gold);font-size:120px">đ</span></div>
+      <div style="font-size:40px;font-weight:700;letter-spacing:8px;color:var(--cream);opacity:.85">TIỀN MẶT</div>
+    </div>
+    <div class="abs gift" id="g1" style="left:70px;top:920px;width:455px;height:340px"><div class="im"><img src="../assets/gift_tiger.png"></div><div class="lb"><b>~300</b> THÙNG BIA TIGER</div></div>
+    <div class="abs gift" id="g2" style="left:555px;top:920px;width:455px;height:340px"><div class="im"><img src="../assets/gift_hinge.png"></div><div class="lb"><b>100</b> BỘ BẢN LỀ 4D</div></div>
+    <div class="abs gift" id="g3" style="left:70px;top:1300px;width:455px;height:340px"><div class="im"><img src="../assets/gift_cash.png"></div><div class="lb">TIỀN MẶT</div></div>
+    <div class="abs gift" id="g4" style="left:555px;top:1300px;width:455px;height:340px"><div class="im"><img src="../assets/gift_voucher.png"></div><div class="lb">VOUCHER MUA KHÓA</div></div>
+    <div class="abs row anton" id="s4foot" style="top:1690px;font-size:66px;color:var(--orange)">HƠN 2.000 QUÀ TẶNG ĐANG CHỜ MỞ</div>
+  </div>
+
+  <!-- ============ SCENE 5: THƯỞNG ĐẠI LÝ ============ -->
+  <div class="scene" id="s5">
+    <div class="abs row anton" id="s5h1" style="top:190px;font-size:110px;color:var(--cream)">THƯỞNG DOANH SỐ</div>
+    <div class="abs row anton" id="s5h2" style="top:310px;font-size:110px;color:var(--gold)">DÀNH CHO ĐẠI LÝ</div>
+    <!-- phase A: phương trình -->
+    <div class="abs full" id="s5A">
+      <div class="abs row" id="s5k" style="top:540px;font-size:42px;font-weight:800;letter-spacing:12px;color:var(--gold)">DOANH SỐ ĐÃ THANH TOÁN</div>
+      <div class="abs row anton" id="s5cnt" style="top:600px;font-size:200px;color:#fff">20.000.000<span style="font-size:110px;color:var(--gold)">đ</span></div>
+      <div class="abs row anton" id="s5eq" style="top:840px;font-size:150px;color:var(--gold)">=</div>
+      <div class="abs row anton" id="s5p1" style="top:990px;font-size:230px;color:#fff">1 ĐIỂM</div>
+      <div class="abs row anton" id="s5p2" style="top:1250px;font-size:190px;color:var(--gold)">+ 5 PHIẾU</div>
+      <div class="abs row" id="s5cap" style="top:1500px;font-size:40px;font-weight:600;color:var(--cream);line-height:1.4">Điểm cộng dồn suốt chương trình<br>5 phiếu dùng để phát cho xưởng</div>
+    </div>
+    <!-- phase B: bậc thang thưởng -->
+    <div class="abs full" id="s5B">
+      <div class="abs chip" id="s5chip" style="left:240px;top:470px;width:600px;height:100px;background:rgba(255,255,255,.1);border:3px solid rgba(255,255,255,.35)">
+        <span class="anton" style="font-size:58px;color:#fff">20 TRIỆU = 1 ĐIỂM</span>
+      </div>
+      <div class="abs" style="left:60px;top:640px;width:960px;height:800px">
+        <div class="bar" id="b1" style="left:0;width:290px;height:220px;background:#3F5B4E;color:#cfd8d2">
+          <div class="anton" style="font-size:58px;line-height:1.05;text-align:center">KHÔNG<br>THƯỞNG</div>
+        </div>
+        <div class="bar" id="b2" style="left:330px;width:300px;height:470px;background:var(--cream)">
+          <div class="anton" id="b2v" style="font-size:68px;color:var(--green);white-space:nowrap">200.000đ</div>
+          <div style="font-size:40px;font-weight:800;color:var(--green)">/ điểm</div>
+        </div>
+        <div class="bar" id="b3" style="left:670px;width:290px;height:760px;background:var(--orange)">
+          <div class="anton" id="b3v" style="font-size:68px;color:#fff;white-space:nowrap">300.000đ</div>
+          <div style="font-size:40px;font-weight:800;color:#fff">/ điểm</div>
+        </div>
+      </div>
+      <div class="abs" style="left:60px;top:1440px;width:960px;height:6px;background:var(--cream)"></div>
+      <div class="abs anton" id="l1" style="left:60px;top:1462px;width:290px;text-align:center;font-size:50px;color:#9fb3a8">DƯỚI 5 ĐIỂM</div>
+      <div class="abs anton" id="l2" style="left:390px;top:1462px;width:300px;text-align:center;font-size:50px;color:var(--cream)">5 – 10 ĐIỂM</div>
+      <div class="abs anton" id="l3" style="left:730px;top:1462px;width:290px;text-align:center;font-size:50px;color:var(--gold)">TỪ 11 ĐIỂM</div>
+      <div class="abs" id="s5tag" style="left:110px;top:1560px;width:860px;height:120px;background:var(--gold);border:5px solid var(--ink);border-radius:24px;box-shadow:8px 10px 0 var(--ink);display:flex;align-items:center;justify-content:center">
+        <span class="anton" style="font-size:62px;color:var(--ink)">ÁP DỤNG CHO TOÀN BỘ SỐ ĐIỂM</span>
+      </div>
+      <div class="abs row" id="s5pay" style="top:1715px;font-size:38px;font-weight:600;color:var(--cream)">Thưởng chi trả trước 04.02.2027</div>
+    </div>
+  </div>
+
+  <!-- ============ SCENE 6: THÔNG ĐIỆP ĐỒNG HÀNH ============ -->
+  <div class="scene" id="s6">
+    <div class="abs full" id="s6A">
+      <div class="abs row" id="s6k" style="top:330px;font-size:46px;font-weight:800;letter-spacing:12px;color:var(--green)">QUÝ ĐẠI LÝ NHẬN THÊM</div>
+      <div class="abs row anton" style="top:410px;font-size:190px;color:var(--orange);white-space:nowrap">
+        <span id="s6n1" style="display:inline-block">1%</span> <span id="s6n2" style="display:inline-block">–</span> <span id="s6n3" style="display:inline-block">1,5%</span>
+      </div>
+      <div class="abs row anton" id="s6t" style="top:640px;font-size:96px;color:var(--green)">TRÊN DOANH SỐ</div>
+      <div class="abs row" id="s6calc" style="top:790px;font-size:40px;font-weight:600;color:#555;line-height:1.5">200.000đ ÷ 20 triệu = <b style="color:var(--ink)">1%</b><br>300.000đ ÷ 20 triệu = <b style="color:var(--ink)">1,5%</b></div>
+      <div class="abs" id="s6card" style="left:90px;top:1000px;width:900px;height:320px;background:var(--green);border:5px solid var(--ink);border-radius:36px;box-shadow:10px 12px 0 var(--ink);display:flex;align-items:center;gap:36px;padding:0 50px">
+        <div style="flex:none;width:150px;height:150px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:100px;color:var(--green2);font-weight:900">✓</div>
+        <div>
+          <div style="font-size:40px;font-weight:700;color:var(--gold);letter-spacing:4px">CỘNG THÊM</div>
+          <div style="font-size:50px;font-weight:800;color:#fff;line-height:1.25">Biên lợi nhuận luôn được ROSTAR đảm bảo</div>
+        </div>
+      </div>
+    </div>
+    <div class="abs full" id="s6B">
+      <div class="abs" id="ring1" style="left:240px;top:420px;width:600px;height:600px;border-radius:50%;border:6px solid var(--orange)"></div>
+      <div class="abs" id="ring2" style="left:240px;top:420px;width:600px;height:600px;border-radius:50%;border:6px solid var(--gold)"></div>
+      <div class="abs" id="ring3" style="left:240px;top:420px;width:600px;height:600px;border-radius:50%;border:6px solid var(--green)"></div>
+      <div class="abs pill" id="s6pill" style="left:240px;top:640px;width:600px;height:160px;border:4px solid var(--ink)">
+        <img src="../assets/logo_rostar.png" style="height:110px">
+      </div>
+      <div class="abs row anton" id="s6b1" style="top:1060px;font-size:104px;color:var(--green)">GIAI ĐOẠN XÂY DỰNG</div>
+      <div class="abs row anton" id="s6b2" style="top:1180px;font-size:120px;color:var(--orange)">THƯƠNG HIỆU ROSTAR</div>
+      <div class="abs row" id="s6b3" style="top:1380px;font-size:60px;font-weight:800;color:var(--ink)">Cùng Quý Đại lý đồng hành</div>
+      <div class="abs row" id="s6b4" style="top:1460px;font-size:60px;font-weight:800;color:var(--ink)">ngay từ <span style="background:var(--gold);padding:0 16px;border-radius:12px">những bước đầu</span></div>
+    </div>
+  </div>
+
+  <!-- ============ SCENE 7: ĐẠI LÝ CẦN THỰC HIỆN ============ -->
+  <div class="scene" id="s7">
+    <div class="abs row anton" id="s7h1" style="top:200px;font-size:120px;color:var(--ink)">ĐẠI LÝ</div>
+    <div class="abs row anton" id="s7h2" style="top:330px;font-size:120px;color:var(--orange)">CẦN THỰC HIỆN</div>
+    <div class="abs card step" id="c1" style="left:70px;top:560px;width:940px;height:300px">
+      <div class="num">01</div>
+      <div><div style="font-size:54px;font-weight:800">Phát đúng số phiếu</div>
+      <div style="font-size:38px;font-weight:500;color:#444;line-height:1.35;margin-top:8px">Ghi đủ số hóa đơn, tên xưởng và SĐT xưởng trước khi giao phiếu</div></div>
+    </div>
+    <div class="abs card step" id="c2" style="left:70px;top:910px;width:940px;height:300px">
+      <div class="num">02</div>
+      <div><div style="font-size:54px;font-weight:800">Giữ hóa đơn để đối soát</div>
+      <div style="font-size:38px;font-weight:500;color:#444;line-height:1.35;margin-top:8px">Gửi danh sách phiếu đã phát cho Sale Admin <b>2 tuần/lần</b></div></div>
+    </div>
+    <div class="abs card step" id="c3" style="left:70px;top:1260px;width:940px;height:330px">
+      <div class="num">03</div>
+      <div style="flex:1"><div style="font-size:50px;font-weight:800">Hướng dẫn xưởng quét QR</div>
+      <div style="font-size:38px;font-weight:500;color:#444;line-height:1.35;margin-top:8px">Nhập mã <b>8 ký tự</b>, chụp màn hình kết quả gửi Zalo ROSTAR</div></div>
+      <img src="../assets/qr.png" style="width:150px;height:150px;flex:none;border:4px solid var(--ink);border-radius:18px">
+    </div>
+  </div>
+
+  <!-- ============ SCENE 8: LƯU Ý + KẾT ============ -->
+  <div class="scene" id="s8">
+    <div class="abs full" id="s8A">
+      <div class="abs" id="s8box" style="left:60px;top:300px;width:960px;height:1330px;background:var(--sand);border:5px solid var(--ink);border-radius:40px;box-shadow:10px 12px 0 var(--ink);padding:50px 56px">
+        <div class="anton" style="font-size:130px;text-align:center;color:var(--ink)">LƯU Ý</div>
+        <div style="height:5px;background:var(--ink);margin:20px 0 40px"></div>
+        <div class="note" id="n1"><span class="ic">📅</span><span>Doanh số được tính từ <b>10/10</b></span></div>
+        <div class="note" id="n2" style="margin-top:44px"><span class="ic">🎟️</span><span>Phiếu giao kèm đơn từ <b>19/10</b>. Đơn từ 10–18/10 được gửi bù phiếu</span></div>
+        <div class="note" id="n3" style="margin-top:44px"><span class="ic">💰</span><span>Thưởng đại lý chi trả trước <b>04/02/2027</b></span></div>
+        <div class="note" id="n4" style="margin-top:44px"><span class="ic">🚫</span><span>Khai báo trước SĐT chủ, người nhà, nhân viên. Các đối tượng này <b>không được nhận giải</b></span></div>
+      </div>
+    </div>
+    <div class="abs full" id="s8B">
+      <div class="abs pill" id="s8pill" style="left:150px;top:380px;width:780px;height:200px">
+        <img src="../assets/logo_rostar.png" style="height:118px"><div class="sep"></div><img src="../assets/logo_klv.png" style="height:96px">
+      </div>
+      <div class="abs row" id="s8a" style="top:700px;font-size:48px;font-weight:600;color:var(--cream)">Mọi thông tin chi tiết, xin liên hệ</div>
+      <div class="abs row" id="s8b" style="top:790px;font-size:46px;font-weight:800;letter-spacing:16px;color:var(--orange)">HOTLINE</div>
+      <div class="abs row anton" id="s8c" style="top:860px;font-size:150px;color:#fff">0819 157 576</div>
+      <div class="abs row anton" id="s8d" style="top:1040px;font-size:150px;color:#fff">0935 000 176</div>
+      <div class="abs row anton" id="s8e" style="top:1290px;font-size:104px;color:var(--gold)">TRÂN TRỌNG CẢM ƠN</div>
+      <div class="abs row anton" id="s8f" style="top:1410px;font-size:104px;color:var(--gold)">QUÝ ĐẠI LÝ!</div>
+      <div class="abs row" id="s8g" style="top:1600px;font-size:30px;font-weight:500;color:var(--cream);opacity:.85;line-height:1.5">ROSTAR Miền Trung · 425 Hoàng Văn Thái, Liên Chiểu, Đà Nẵng<br>rostar.vn</div>
+    </div>
+  </div>
+
+  <!-- overlay chung -->
+  <div class="abs mono" id="hdrL" style="left:70px;top:90px;font-size:28px">N° CTKM TẾT 2027</div>
+  <div class="abs mono" id="hdrR" style="right:70px;top:90px;font-size:28px">SERI Đ · ĐẠI LÝ</div>
+  <div class="progress" id="prog"><i id="progi"></i></div>
+</div>
+
+<script>
+// ---------- thời lượng giọng đọc (giây) & bố cục cảnh ----------
+const VO = [2.847,12.774,8.411,6.766,14.811,12.826,9.613,4.676];
+const LEAD = [0.8,0.5,0.6,0.6,0.6,0.6,0.6,6.2];
+const TAIL = [0.5,0.5,0.5,0.5,0.6,0.6,0.6,2.6];
+const BG = ['#1F4434','#1F4434','#EF6A12','#F7F0E3','#1F4434','#F7F0E3','#F7F0E3','#1F4434'];
+const HDR = ['#E7AA2E','#E7AA2E','#1B1B1B','#EF6A12','#E7AA2E','#EF6A12','#EF6A12','#E7AA2E'];
+const DOT = ['#ffffff','#ffffff','#000000','#000000','#ffffff','#000000','#000000','#ffffff'];
+const SC = []; let acc = 0;
+for (let i=0;i<8;i++){ const d=LEAD[i]+VO[i]+TAIL[i]; SC.push({start:acc, dur:d, vo:acc+LEAD[i]}); acc+=d; }
+const TOTAL = acc;
+window.TIMING = {total:TOTAL, scenes:SC};
+
+// ---------- helpers ----------
+const $ = id => document.getElementById(id);
+const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+const P=(t,a,d)=>clamp((t-a)/d);
+const eOut=x=>1-Math.pow(1-x,3);
+const eIO=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const eBack=x=>{const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2);};
+const lerp=(a,b,x)=>a+(b-a)*x;
+const fmt=n=>Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+function st(el,{x=0,y=0,s=1,r=0,o=1,b=0,sx=null,sy=null,ry=0}={}){
+  if(typeof el==='string') el=$(el);
+  const scl = (sx!==null||sy!==null)?`scale(${sx??s},${sy??s})`:`scale(${s})`;
+  el.style.transform=`translate(${x}px,${y}px) ${scl} rotate(${r}deg)` + (ry?` perspective(1400px) rotateY(${ry}deg)`:'');
+  el.style.opacity=o; el.style.filter=b>0.05?`blur(${b}px)`:'none';
+}
+// trượt lên + mờ chuyển động
+function rise(el,t,a,d=0.55,dist=70){const k=P(t,a,d),e=eOut(k);st(el,{y:(1-e)*dist,o:e,b:(1-e)*10});}
+// nảy (punch)
+function pop(el,t,a,d=0.45,from=0.4){const k=P(t,a,d);st(el,{s:lerp(from,1,eBack(k)),o:clamp(k*3),b:(1-k)*6});}
+// đập dấu
+function slam(el,t,a,d=0.28,from=2.4,r0=-18,r1=0){const k=P(t,a,d),e=eOut(k);st(el,{s:lerp(from,1,e),r:lerp(r0,r1,e),o:clamp(k*2.5),b:(1-k)*8});}
+// trượt ngang
+function slideX(el,t,a,d=0.55,dist=900){const k=P(t,a,d),e=eOut(k);st(el,{x:(1-e)*dist,o:clamp(k*2),b:(1-e)*18});}
+function count(el,t,a,d,target,suffix=''){const k=eOut(P(t,a,d)); el.firstChild.nodeValue = fmt(target*k)+suffix;}
+
+// ---------- các cảnh: hàm nhận (lt = thời gian trong cảnh, v = thời gian tính từ lúc giọng đọc bắt đầu) ----------
+const scenes = [
+  // S1
+  (lt,v)=>{
+    pop('s1pill',lt,0.1,0.6,0.6);
+    rise('s1a',lt,0.55); rise('s1b',lt,0.75,0.6,90); rise('s1c',lt,1.0);
+    slam('s1stamp',lt,2.0,0.3,2.6,-34,-10);
+  },
+  // S2
+  (lt,v)=>{
+    const k=P(lt,0,0.7),e=eOut(k); st('s2title',{s:lerp(1.7,1,e),o:k,b:(1-e)*22});
+    rise('s2sub',v,1.0);
+    pop('s2w1',v,2.85,0.4); pop('s2w2',v,3.15,0.45);
+    pop('s2w3',v,3.75,0.4); pop('s2w4',v,4.0,0.4); pop('s2w5',v,4.25,0.45);
+    rise('s2tl',v,5.0);
+    pop('s2d1',v,5.3,0.5,0.6);
+    const kl=eIO(P(v,7.2,1.2)); st('s2line',{sx:kl,sy:1,o:kl>0?1:0}); st('s2arrow',{o:P(v,8.2,0.2)});
+    pop('s2d2',v,8.6,0.5,0.6);
+    rise('s2note',v,10.6);
+  },
+  // S3
+  (lt,v)=>{
+    rise('s3k',lt,0.15); slam('s3h',lt,0.35,0.35,1.6,0,0);
+    rise('s3inv',v,2.0,0.6,240); count($('s3cnt'),v,2.4,1.8,4000000,'đ');
+    const ka=eOut(P(v,5.4,0.5)); st('s3arr',{y:(1-ka)*-40,o:ka, sy:ka});
+    const kt=P(v,6.0,0.7),et=eBack(kt); st('s3tix',{ry:lerp(95,0,clamp(et,0,1.1)),o:clamp(kt*3),s:lerp(.85,1,eOut(kt))});
+    rise('s3cap',v,7.0);
+  },
+  // S4
+  (lt,v)=>{
+    slam('s4pill',v,0.0,0.3,2.2,-6,-2);
+    rise('s4box',v,2.2,0.55,200); count($('s4cnt'),v,2.5,1.4,5000000);
+    pop('g1',v,4.4,0.45); pop('g2',v,4.65,0.45); pop('g3',v,4.9,0.45); pop('g4',v,5.15,0.45);
+    rise('s4foot',v,5.5);
+  },
+  // S5
+  (lt,v)=>{
+    rise('s5h1',lt,0.05); rise('s5h2',lt,0.25);
+    // phase A
+    rise('s5k',v,0.0); count($('s5cnt'),v,0.3,2.2,20000000);
+    const kc=P(v,0.3,0.4); $('s5cnt').style.opacity=kc;
+    pop('s5eq',v,2.6,0.35,0.3);
+    { const k=P(v,2.9,0.35),e=eOut(k); st('s5p1',{s:lerp(1.9,1,e),o:clamp(k*2),b:(1-e)*14}); }
+    { const k=P(v,4.25,0.4),e=eOut(k); st('s5p2',{x:(1-e)*-500,o:clamp(k*2),b:(1-e)*16}); }
+    rise('s5cap',v,4.8);
+    const out=eIO(P(v,6.0,0.45)); const A=$('s5A'); A.style.opacity=1-out; A.style.transform=`translateY(${-out*120}px)`;
+    // phase B
+    const inB=P(v,6.1,0.4); $('s5B').style.opacity=inB>0?1:0;
+    rise('s5chip',v,6.2,0.5,-60);
+    const g=(id,a,d)=>{const k=eOut(P(v,a,d)); st(id,{sy:k,sx:1,o:k>0?1:0}); $(id).style.transformOrigin='50% 100%';};
+    g('b1',6.3,0.5); rise('l1',v,6.4,0.4,30);
+    g('b2',6.5,0.8); rise('l2',v,6.6,0.4,30); count($('b2v'),v,7.0,1.2,200000,'đ'); $('b2v').style.opacity=P(v,7.0,0.2);
+    g('b3',9.65,0.9); rise('l3',v,9.75,0.4,30); count($('b3v'),v,10.2,1.3,300000,'đ'); $('b3v').style.opacity=P(v,10.2,0.2);
+    // nhấn nhẹ cột đang nói
+    const hl2=P(v,7.0,0.3)*(1-P(v,9.5,0.3)), hl3=P(v,9.9,0.3);
+    $('b2').style.boxShadow=`0 0 0 ${hl2*10}px rgba(231,170,46,.55)`;
+    $('b3').style.boxShadow=`0 0 0 ${hl3*10}px rgba(255,255,255,.35)`;
+    slam('s5tag',v,13.3,0.3,1.8,-4,0);
+    rise('s5pay',v,13.9);
+  },
+  // S6
+  (lt,v)=>{
+    rise('s6k',v,0.0);
+    { const k=P(v,0.25,0.35),e=eOut(k); st('s6n1',{s:lerp(2.2,1,e),o:clamp(k*2),b:(1-e)*14}); }
+    pop('s6n2',v,0.9,0.3,0.2);
+    // speed ramp: vào nhanh rồi trôi chậm
+    { const k=P(v,1.1,0.35),e=eOut(k); const drift=0.06*eOut(P(v,1.45,5)); st('s6n3',{s:lerp(2.2,1,e)+drift,o:clamp(k*2),b:(1-e)*14}); }
+    rise('s6t',v,1.7); rise('s6calc',v,2.3);
+    rise('s6card',v,3.1,0.6,160);
+    const out=eIO(P(v,6.1,0.45)); const A=$('s6A'); A.style.opacity=1-out; A.style.transform=`scale(${1+out*0.08})`;
+    const inB=P(v,6.3,0.3); $('s6B').style.opacity=inB;
+    pop('s6pill',v,6.4,0.55,0.5);
+    ['ring1','ring2','ring3'].forEach((id,i)=>{ const ph=((v-6.6)/2.4 + i/3); const f=v<6.6?0:(ph-Math.floor(ph)); st(id,{s:lerp(0.35,1.25,f),o:(v<6.6?0:(1-f))*0.9}); });
+    rise('s6b1',v,6.8); rise('s6b2',v,7.3,0.6,90);
+    rise('s6b3',v,9.3); rise('s6b4',v,10.2);
+  },
+  // S7
+  (lt,v)=>{
+    rise('s7h1',lt,0.05); rise('s7h2',lt,0.25);
+    slideX('c1',v,0.0); slideX('c2',v,3.1); slideX('c3',v,6.3);
+    const act=[ [0,3.1],[3.1,6.3],[6.3,99] ];
+    ['c1','c2','c3'].forEach((id,i)=>{ const on=v>=act[i][0]&&v<act[i][1]; const el=$(id);
+      el.style.borderColor=on?'#EF6A12':'#1B1B1B'; el.style.boxShadow=on?'10px 12px 0 #EF6A12':'10px 12px 0 #1B1B1B'; });
+  },
+  // S8
+  (lt,v)=>{
+    rise('s8box',lt,0.1,0.6,200);
+    rise('n1',lt,0.6,0.5,40); rise('n2',lt,1.4,0.5,40); rise('n3',lt,2.3,0.5,40); rise('n4',lt,3.1,0.5,40);
+    const out=eIO(P(lt,5.7,0.45)); const A=$('s8A'); A.style.opacity=1-out; A.style.transform=`translateY(${-out*160}px)`;
+    $('s8B').style.opacity=P(lt,5.9,0.2);
+    pop('s8pill',v,-0.2,0.55,0.6);
+    rise('s8a',v,0.1); rise('s8b',v,0.5); pop('s8c',v,0.9,0.45,0.6); pop('s8d',v,1.3,0.45,0.6);
+    rise('s8e',v,2.9,0.6,80); rise('s8f',v,3.2,0.6,80); rise('s8g',v,3.9);
+  },
+];
+
+// ---------- render tại thời điểm t ----------
+function render(t){
+  let idx=SC.findIndex(s=>t>=s.start && t<s.start+s.dur); if(idx<0) idx=SC.length-1;
+  const s=SC[idx], lt=t-s.start, v=t-s.vo;
+  // nền: màu cảnh trước + vòng tròn mở rộng màu cảnh hiện tại
+  const prevBg = idx>0?BG[idx-1]:BG[0];
+  $('bgBase').style.background=prevBg;
+  const w=$('wipe'); w.style.background=BG[idx];
+  const kw=idx===0?1:eIO(P(lt,0,0.6)); w.style.clipPath=`circle(${kw*1150}px at 540px 960px)`;
+  $('dots').style.color=DOT[idx];
+  $('hdrL').style.color=HDR[idx]; $('hdrR').style.color=HDR[idx];
+  // ẩn hết cảnh, hiện cảnh hiện tại (vào: zoom-in nhẹ; ra: zoom-out + mờ)
+  for(let i=0;i<8;i++){ $('s'+(i+1)).style.opacity=0; }
+  const el=$('s'+(idx+1));
+  const kin=idx===0?1:eOut(P(lt,0.15,0.4));
+  const kout=idx===SC.length-1?0:eIO(P(lt,s.dur-0.35,0.35));
+  const push = 1 + 0.025*(lt/s.dur);  // push-in chậm suốt cảnh
+  el.style.opacity=kin*(1-kout);
+  el.style.transform=`scale(${(lerp(0.96,1,kin))*push*(1+kout*0.06)})`;
+  el.style.filter=kout>0.02?`blur(${kout*8}px)`:'none';
+  scenes[idx](lt,v);
+  // rung khi đóng dấu ở cảnh 1
+  if(idx===0){ const k=P(lt,2.28,0.3); if(k>0&&k<1){ const a=(1-k)*14; el.style.transform+=` translate(${Math.sin(k*60)*a}px,${Math.cos(k*47)*a}px)`; } }
+  if(idx===3){ const k=P(v,0.28,0.25); if(k>0&&k<1){ const a=(1-k)*10; el.style.transform+=` translate(${Math.sin(k*60)*a}px,0)`; } }
+  // fade đen cuối video
+  const endk=P(t,TOTAL-0.8,0.8); $('stage').style.filter=endk>0?`brightness(${1-endk})`:'none';
+  // thanh tiến trình
+  $('progi').style.width=(100*clamp(t/TOTAL))+'%';
+  $('prog').style.background = (BG[idx]==='#F7F0E3')?'rgba(0,0,0,.12)':'rgba(255,255,255,.18)';
+}
+window.render=render;
+
+// ---------- danh sách hiệu ứng âm thanh (giây tuyệt đối) ----------
+const S=i=>SC[i];
+window.SFX=[
+  ...SC.slice(1).map(s=>({t:s.start,k:'whoosh'})),
+  {t:0.1,k:'pop'},{t:2.25,k:'stamp'},
+  {t:S(1).vo+2.85,k:'pop'},{t:S(1).vo+3.75,k:'pop'},{t:S(1).vo+5.3,k:'pop'},{t:S(1).vo+8.6,k:'pop'},
+  {t:S(2).start+0.4,k:'stamp'},{t:S(2).vo+4.2,k:'ding'},{t:S(2).vo+6.0,k:'flip'},
+  {t:S(3).vo+0.2,k:'stamp'},{t:S(3).vo+3.9,k:'cash'},{t:S(3).vo+4.4,k:'pop'},{t:S(3).vo+4.65,k:'pop'},{t:S(3).vo+4.9,k:'pop'},{t:S(3).vo+5.15,k:'pop'},
+  {t:S(4).vo+2.9,k:'stamp'},{t:S(4).vo+4.25,k:'whoosh'},{t:S(4).vo+8.8,k:'ding'},{t:S(4).vo+12.7,k:'cash'},{t:S(4).vo+13.45,k:'stamp'},
+  {t:S(5).vo+0.25,k:'stamp'},{t:S(5).vo+1.1,k:'stamp'},{t:S(5).vo+6.4,k:'pop'},
+  {t:S(6).vo+0.0,k:'whoosh'},{t:S(6).vo+3.1,k:'whoosh'},{t:S(6).vo+6.3,k:'whoosh'},
+  {t:S(7).start+0.6,k:'pop'},{t:S(7).start+1.4,k:'pop'},{t:S(7).start+2.3,k:'pop'},{t:S(7).start+3.1,k:'pop'},
+  {t:S(7).vo+0.9,k:'pop'},{t:S(7).vo+1.3,k:'pop'},
+];
+document.fonts.ready.then(()=>{ window.READY=true; render(0); });
+</script>
+</body>
+</html>
