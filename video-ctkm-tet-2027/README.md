@@ -1,6 +1,13 @@
 # Video CTKM Tết 2027 – "Mua ROSTAR – Quà thả ga" (dành cho Đại lý)
 
-## Bản 3 (mới nhất): `ROSTAR_MuaRostar_QuaThaGa_DaiLy_9x16_v3.mp4` – ~2:22
+## Bản 4 (mới nhất): `ROSTAR_MuaRostar_QuaThaGa_DaiLy_9x16_v4.mp4` – ~2:03
+Nguồn `motion-v4/`, âm thanh `audio/mix4.m4a`. Giọng nữ "Diệu" (Topview TTS, tốc độ 1.1).
+- Bỏ cảnh 1–1,5%. Cảnh "Quà cực kỳ hấp dẫn" dùng hoạt hình vector: lon Tiger Crystal rót vào ly, 2 ly cụng.
+- `tools/asr.py`: nhận dạng tiếng Việt offline (sherpa-onnx, model zipformer-vi) để kiểm tra lời đọc.
+- `tools/process_vo.py`: rút ngắn khoảng lặng dài, nhấn âm lượng các cụm từ khoá, xuất mốc từng chữ.
+- `tools/build_vo4.py`: khớp mốc từng chữ với bản thiết kế để đồng bộ hình (sinh `motion-v4/vo.js`).
+
+## Bản 3: `ROSTAR_MuaRostar_QuaThaGa_DaiLy_9x16_v3.mp4` – ~2:22
 Nguồn: `motion-v3/` (clip AI rót bia/cụng ly: `motion-v3/clip/tiger_pour_clink.mp4`, tạo bằng Topview Wan 3.0),
 âm thanh `audio/mix3.m4a`. Giọng nữ "Huệ" (Topview TTS), tăng tốc 15% khi ghép.
 - Sửa chồng chữ / dấu bị cắt: font Anton được giãn dòng tự động; `motion-v3/qa.js` kiểm tra va chạm theo nét chữ thực.
