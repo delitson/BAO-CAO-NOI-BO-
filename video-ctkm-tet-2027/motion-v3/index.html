@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>ROSTAR – Mua ROSTAR Quà Thả Ga (v2)</title>
+<style>
+  :root{
+    --green:#1F4434; --green2:#173327; --gold:#E7AA2E; --orange:#EF6A12;
+    --cream:#F7F0E3; --paper:#FFF7EC; --ink:#1B1B1B; --sand:#F2DC96; --mute:#5E6F66;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+  #stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:var(--green);
+    font-family:'Be Vietnam Pro',sans-serif;color:var(--ink)}
+  .abs{position:absolute}
+  .full{position:absolute;inset:0}
+  .row{left:0;right:0;text-align:center}
+  .anton{font-family:'Anton',sans-serif;font-weight:400;line-height:1.08;letter-spacing:1px}
+  .mono{font-family:'DejaVu Sans Mono',monospace;font-weight:700;letter-spacing:6px}
+  .kick{font-weight:800;letter-spacing:12px}
+  .bg{position:absolute;inset:0}
+  .dots{position:absolute;inset:0;opacity:.07;
+    background-image:radial-gradient(currentColor 1.6px, transparent 1.7px);background-size:22px 22px}
+  .wipe{position:absolute;inset:0;clip-path:circle(0px at 540px 960px)}
+  .scene{position:absolute;inset:0;opacity:0;transform-origin:540px 960px}
+  .pill{background:var(--paper);border-radius:999px;display:flex;align-items:center;justify-content:center;gap:34px;
+    box-shadow:0 14px 0 rgba(0,0,0,.18)}
+  .pill img{display:block}
+  .pill .sep{width:4px;height:90px;background:#d8cbb7;border-radius:2px}
+  .stamp{border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    box-shadow:0 10px 0 rgba(0,0,0,.25)}
+  .card{background:#fff;border:5px solid var(--ink);border-radius:34px;box-shadow:10px 12px 0 var(--ink)}
+  .chip{border-radius:26px;display:flex;align-items:center;justify-content:center}
+  .gift{background:#fff;border:5px solid var(--ink);border-radius:30px;box-shadow:8px 10px 0 var(--ink);
+    display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:20px 14px 22px}
+  .gift .im{height:180px;display:flex;align-items:center;justify-content:center}
+  .gift .im img{max-height:180px;max-width:380px}
+  .gift .lb{font-family:'Anton';font-size:44px;line-height:1.3;text-align:center}
+  .gift .lb b{color:var(--orange);font-weight:400}
+  .bar{position:absolute;bottom:0;border:5px solid var(--ink);border-bottom:none;border-radius:26px 26px 0 0;
+    display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:26px;overflow:hidden}
+  .step{display:flex;align-items:center;gap:30px;padding:30px 34px}
+  .num{flex:none;width:118px;height:118px;border-radius:50%;background:var(--green);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-family:'DejaVu Sans Mono';font-weight:700;font-size:50px}
+  .note{display:flex;gap:24px;align-items:flex-start;font-size:44px;line-height:1.35;font-weight:600}
+  .note .ic{font-size:52px;line-height:1.2;flex:none;width:70px;text-align:center}
+  .tix{position:absolute;width:170px;height:200px;background:var(--paper);border:5px solid var(--ink);border-radius:22px;
+    box-shadow:6px 8px 0 var(--ink);overflow:hidden}
+  .tix::before{content:"";position:absolute;left:0;right:0;top:0;height:56px;background:var(--orange);border-bottom:4px dashed var(--ink)}
+  .tix span{position:absolute;left:0;right:0;top:70px;text-align:center;font-family:'Anton';font-size:64px;color:var(--orange)}
+  .tix i{position:absolute;left:0;right:0;bottom:16px;text-align:center;font-style:normal;font-family:'DejaVu Sans Mono';font-weight:700;font-size:20px;letter-spacing:3px}
+  .node{position:absolute;display:flex;align-items:center;gap:30px;padding:0 40px;background:#fff;border:5px solid var(--ink);
+    border-radius:34px;box-shadow:10px 12px 0 var(--ink)}
+  .node .ic{flex:none;width:130px;height:130px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:70px}
+  .node .t{font-family:'Anton';font-size:76px;line-height:1}
+  .node .s{font-size:38px;font-weight:600;color:#444;margin-top:6px}
+  .darr{position:absolute;width:60px;height:110px}
+  .darr::before{content:"";position:absolute;left:24px;top:0;width:12px;height:80px;border-radius:6px;background:currentColor}
+  .darr::after{content:"";position:absolute;left:0;top:70px;border-top:40px solid currentColor;border-left:30px solid transparent;border-right:30px solid transparent}
+  .codebox{position:absolute;width:92px;height:120px;border:5px solid var(--ink);border-radius:18px;background:#fff;
+    display:flex;align-items:center;justify-content:center;font-family:'DejaVu Sans Mono';font-weight:700;font-size:64px;color:var(--green)}
+  .circ{position:absolute;width:280px;height:280px;border-radius:50%;border:6px solid var(--ink);display:flex;flex-direction:column;
+    align-items:center;justify-content:center;box-shadow:8px 10px 0 var(--ink)}
+  .progress{position:absolute;left:90px;right:90px;bottom:120px;height:8px;border-radius:4px;background:rgba(255,255,255,.18);overflow:hidden}
+  .progress i{display:block;height:100%;width:0;background:var(--gold);border-radius:4px}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="bg" id="bgBase"></div>
+  <div class="wipe" id="wipe"></div>
+  <div class="dots" id="dots"></div>
+
+  <!-- 1 MỞ ĐẦU -->
+  <div class="scene" id="s1">
+    <div class="abs pill" id="s1pill" style="left:150px;top:470px;width:780px;height:200px">
+      <img src="../assets/logo_rostar.png" style="height:118px"><div class="sep"></div><img src="../assets/logo_klv.png" style="height:96px">
+    </div>
+    <div class="abs row" id="s1a" style="top:770px;font-size:58px;font-weight:600;color:var(--cream)">Kính gửi</div>
+    <div class="abs row anton" id="s1b" style="top:880px;font-size:200px;color:var(--gold)">QUÝ ĐẠI LÝ</div>
+    <div class="abs row anton" id="s1c" style="top:1120px;font-size:96px;color:var(--cream);letter-spacing:8px">ROSTAR MIỀN TRUNG</div>
+    <div class="abs stamp" id="s1stamp" style="left:360px;top:1330px;width:360px;height:360px;background:var(--gold);border:8px solid #c48c1c">
+      <div class="mono" style="font-size:28px;color:#3a2a06;margin-bottom:6px">DÀNH CHO</div>
+      <div class="anton nofix" style="font-size:96px;color:var(--green2);line-height:1.25">ĐẠI LÝ</div>
+      <div class="mono" style="font-size:26px;color:#3a2a06;margin-top:6px">★ TẾT 2027 ★</div>
+    </div>
+  </div>
+
+  <!-- 2 TÊN CHƯƠNG TRÌNH -->
+  <div class="scene" id="s2">
+    <div class="abs row anton" id="s2title" style="top:360px;font-size:232px;color:var(--gold)">THÔNG BÁO</div>
+    <div class="abs row kick" id="s2sub" style="top:700px;font-size:46px;color:var(--cream)">CHƯƠNG TRÌNH</div>
+    <div class="abs row anton" style="top:780px;font-size:170px;color:var(--cream)">
+      <span id="s2w1" style="display:inline-block">MUA</span> <span id="s2w2" style="display:inline-block">ROSTAR</span>
+    </div>
+    <div class="abs row anton" style="top:980px;font-size:190px;color:var(--gold)">
+      <span id="s2w3" style="display:inline-block">QUÀ</span> <span id="s2w4" style="display:inline-block">THẢ</span> <span id="s2w5" style="display:inline-block">GA</span>
+    </div>
+    <div class="abs row kick" id="s2tl" style="top:1320px;font-size:40px;letter-spacing:10px;color:var(--gold)">THỜI GIAN</div>
+    <div class="abs chip anton" id="s2d1" style="left:70px;top:1400px;width:400px;height:150px;background:var(--cream);color:var(--green);font-size:84px">10.10.2026</div>
+    <div class="abs" id="s2line" style="left:480px;top:1471px;width:120px;height:8px;background:var(--gold);transform-origin:0 50%"></div>
+    <div class="abs" id="s2arrow" style="left:588px;top:1455px;width:0;height:0;border-left:30px solid var(--gold);border-top:20px solid transparent;border-bottom:20px solid transparent"></div>
+    <div class="abs chip anton" id="s2d2" style="left:610px;top:1400px;width:400px;height:150px;background:var(--gold);color:var(--green2);font-size:84px">25.01.2027</div>
+    <div class="abs row" id="s2note" style="top:1600px;font-size:40px;font-weight:600;color:var(--cream);opacity:.9">Nhận giải đến hết 28.01.2027</div>
+  </div>
+
+  <!-- 3 CHƯƠNG TRÌNH TRI ÂN XƯỞNG -->
+  <div class="scene" id="s3">
+    <div class="abs row kick" id="s3k" style="top:190px;font-size:42px;color:var(--green)">CHƯƠNG TRÌNH DÀNH CHO</div>
+    <div class="abs row anton" id="s3h" style="top:290px;font-size:124px;color:var(--orange);white-space:nowrap">KHÁCH HÀNG XƯỞNG</div>
+    <div class="abs" id="s3eq" style="left:70px;top:445px;width:940px;height:100px;background:var(--ink);border-radius:50px;display:flex;align-items:center;justify-content:center">
+      <span style="font-size:40px;font-weight:800;color:var(--cream);white-space:nowrap">cũng chính là <span style="color:var(--gold)">khách hàng của Quý Đại lý</span></span>
+    </div>
+    <div class="node" id="nd1" style="left:140px;top:630px;width:800px;height:220px">
+      <div class="ic" style="background:var(--paper);border:4px solid var(--ink)"><img src="../assets/logo_rostar.png" style="width:116px"></div>
+      <div><div class="t" style="color:var(--orange)">ROSTAR</div><div class="s">Đứng ra chuẩn bị phần quà</div></div>
+    </div>
+    <div class="darr" id="ar1" style="left:510px;top:868px;color:var(--ink);height:100px"></div>
+    <div class="node" id="nd2" style="left:140px;top:985px;width:800px;height:220px">
+      <div class="ic" style="background:var(--gold)">🤝</div>
+      <div><div class="t" style="color:var(--green)">ĐẠI LÝ</div><div class="s">Trao phiếu cho khách xưởng</div></div>
+    </div>
+    <div class="darr" id="ar2" style="left:510px;top:1223px;color:var(--ink);height:100px"></div>
+    <div class="node" id="nd3" style="left:140px;top:1340px;width:800px;height:220px">
+      <div class="ic" style="background:var(--orange)">🎁</div>
+      <div><div class="t" style="color:var(--ink)">XƯỞNG</div><div class="s">Nhận quà tri ân</div></div>
+    </div>
+    <div class="abs row" id="s3cap" style="top:1610px;font-size:42px;font-weight:700;color:var(--ink);line-height:1.35">Lời tri ân gửi các xưởng đã tin dùng<br><span style="color:var(--orange)">ROSTAR &amp; KLV</span></div>
+  </div>
+
+  <!-- 4 ĐẠI LÝ NHẬN ĐIỂM + PHIẾU -->
+  <div class="scene" id="s4">
+    <div class="abs row kick" id="s4k" style="top:178px;font-size:44px;color:var(--gold)">CÁCH THỨC</div>
+    <div class="abs row anton" id="s4h" style="top:260px;font-size:130px;color:var(--cream)">RẤT ĐƠN GIẢN</div>
+    <div class="abs row kick" id="s4l" style="top:500px;font-size:40px;color:var(--gold)">MỖI DOANH SỐ ĐÃ THANH TOÁN</div>
+    <div class="abs row anton" id="s4cnt" style="top:560px;font-size:200px;color:#fff">20.000.000<span style="font-size:110px;color:var(--gold)">đ</span></div>
+    <div class="abs row anton" id="s4eq" style="top:800px;font-size:130px;color:var(--gold)">=</div>
+    <div class="abs" id="s4p1" style="left:90px;top:930px;width:900px;height:260px;background:var(--cream);border:5px solid var(--ink);border-radius:36px;box-shadow:10px 12px 0 var(--ink);display:flex;align-items:center;justify-content:center;gap:30px">
+      <span class="anton nofix" style="font-size:150px;line-height:1.3;color:var(--green);padding-top:14px">1 ĐIỂM</span><span style="font-size:48px;font-weight:800;color:var(--green);line-height:1.1">THƯỞNG<br>ĐẠI LÝ</span>
+    </div>
+    <div class="abs row anton" id="s4plus" style="top:1200px;font-size:110px;color:var(--gold)">+</div>
+    <div class="abs" id="s4p2" style="left:90px;top:1330px;width:900px;height:260px;background:var(--gold);border:5px solid var(--ink);border-radius:36px;box-shadow:10px 12px 0 var(--ink);display:flex;align-items:center;justify-content:center;gap:30px">
+      <span class="anton nofix" style="font-size:150px;line-height:1.3;color:var(--ink);padding-top:14px">5 PHIẾU</span><span style="font-size:48px;font-weight:800;color:var(--ink);line-height:1.1">MỞ QUÀ<br>TỪ ROSTAR</span>
+    </div>
+  </div>
+
+  <!-- 5 PHIẾU ĐẾN TAY XƯỞNG -->
+  <div class="scene" id="s5">
+    <div class="abs row anton" id="s5h" style="top:165px;font-size:96px;color:#fff;line-height:1.05">5 PHIẾU NÀY<br><span style="color:var(--ink)">PHÁT CHO XƯỞNG</span></div>
+    <div class="tix" id="t1" style="left:60px;top:400px"><span>01</span><i>PHIẾU</i></div>
+    <div class="tix" id="t2" style="left:255px;top:400px"><span>02</span><i>PHIẾU</i></div>
+    <div class="tix" id="t3" style="left:450px;top:400px"><span>03</span><i>PHIẾU</i></div>
+    <div class="tix" id="t4" style="left:645px;top:400px"><span>04</span><i>PHIẾU</i></div>
+    <div class="tix" id="t5" style="left:840px;top:400px"><span>05</span><i>PHIẾU</i></div>
+    <div class="abs card" id="s5inv" style="left:120px;top:640px;width:840px;height:340px;padding:34px 50px;text-align:center">
+      <div style="font-size:40px;font-weight:800;letter-spacing:8px;color:#666">MỖI ĐƠN HÀNG TỪ</div>
+      <div class="anton" id="s5cnt" style="font-size:150px;color:var(--orange);line-height:1.1">4.000.000đ</div>
+      <div style="font-size:40px;font-weight:700;color:var(--ink)">tiền hàng ROSTAR hoặc KLV</div>
+    </div>
+    <div class="darr" id="s5arr" style="left:510px;top:1000px;color:#fff"></div>
+    <div class="abs" id="s5x" style="left:120px;top:1130px;width:840px;height:270px;transform-origin:50% 50%">
+      <div style="position:absolute;inset:0;background:var(--paper);border-radius:30px;border:5px solid var(--ink);box-shadow:10px 12px 0 var(--ink);overflow:hidden;display:flex;align-items:center">
+        <div style="flex:none;width:130px;align-self:stretch;background:var(--green);border-right:5px dashed var(--ink);display:flex;align-items:center;justify-content:center;font-size:70px">🏭</div>
+        <div style="flex:1;text-align:center">
+          <div class="anton" style="font-size:120px;color:var(--orange);line-height:1.05">1 PHIẾU</div>
+          <div style="font-size:44px;font-weight:800;color:var(--ink)">cho xưởng mua hàng</div>
+        </div>
+      </div>
+    </div>
+    <div class="abs row" id="s5math" style="top:1440px;font-size:40px;font-weight:700;color:#fff">20 triệu = 5 đơn × 4 triệu = <span style="background:var(--ink);color:var(--gold);padding:0 14px;border-radius:10px">5 phiếu</span></div>
+    <div class="abs row anton" id="s5win" style="top:1540px;font-size:84px;color:var(--ink)">XƯỞNG CÓ CƠ HỘI TRÚNG QUÀ!</div>
+  </div>
+
+  <!-- 6 GIẢI THƯỞNG -->
+  <div class="scene" id="s6">
+    <div class="abs" id="s6pill" style="left:160px;top:210px;width:760px;height:150px;background:var(--ink);border-radius:80px;display:flex;align-items:center;justify-content:center">
+      <span class="anton" style="font-size:92px;color:var(--gold)">100% PHIẾU CÓ QUÀ</span>
+    </div>
+    <div class="abs" id="s6box" style="left:70px;top:410px;width:940px;height:460px;background:var(--green);border:5px solid var(--ink);border-radius:36px;box-shadow:10px 12px 0 var(--ink);text-align:center;padding-top:40px">
+      <div style="font-size:50px;font-weight:800;letter-spacing:12px;color:var(--gold)">GIẢI ĐẶC BIỆT</div>
+      <div class="anton nofix" id="s6cnt" style="font-size:200px;color:var(--cream);line-height:1.22">5.000.000<span style="color:var(--gold);font-size:120px">đ</span></div>
+      <div style="font-size:40px;font-weight:700;letter-spacing:8px;color:var(--cream);opacity:.85">TIỀN MẶT</div>
+    </div>
+    <div class="abs gift" id="g1" style="left:70px;top:920px;width:455px;height:370px"><div class="im"><img src="../assets/gift_tiger.png"></div><div class="lb"><b>~300</b> THÙNG BIA<br>TIGER COOL PACK</div></div>
+    <div class="abs gift" id="g2" style="left:555px;top:920px;width:455px;height:370px"><div class="im"><img src="../assets/gift_hinge.png"></div><div class="lb"><b>100</b> BỘ BẢN LỀ<br>4D ROSTAR 17CM</div></div>
+    <div class="abs gift" id="g3" style="left:70px;top:1330px;width:455px;height:330px"><div class="im"><img src="../assets/gift_cash.png"></div><div class="lb">TIỀN MẶT</div></div>
+    <div class="abs gift" id="g4" style="left:555px;top:1330px;width:455px;height:330px"><div class="im"><img src="../assets/gift_voucher.png"></div><div class="lb">VOUCHER MUA KHÓA</div></div>
+    <div class="abs row anton" id="s6foot" style="top:1700px;font-size:66px;color:var(--orange)">HƠN 2.000 QUÀ TẶNG ĐANG CHỜ MỞ</div>
+  </div>
+
+  <!-- 7 XƯỞNG MỞ QUÀ -->
+  <div class="scene" id="s7">
+    <div class="abs row kick" id="s7k" style="top:188px;font-size:44px;color:var(--gold)">XƯỞNG NHẬN QUÀ</div>
+    <div class="abs row anton" id="s7h" style="top:270px;font-size:140px;color:var(--cream)">CHỈ 3 BƯỚC</div>
+    <div class="abs card step" id="x1" style="left:70px;top:520px;width:940px;height:300px">
+      <div class="num">01</div>
+      <div style="flex:1"><div class="anton" style="font-size:90px">QUÉT MÃ QR</div><div style="font-size:38px;font-weight:600;color:#444">in trên phiếu</div></div>
+      <img src="../assets/qr.png" style="width:200px;height:200px;border:4px solid var(--ink);border-radius:18px">
+    </div>
+    <div class="abs card" id="x2" style="left:70px;top:870px;width:940px;height:380px;padding:30px 34px">
+      <div style="display:flex;align-items:center;gap:30px"><div class="num">02</div><div class="anton" style="font-size:90px">NHẬP MÃ 8 KÝ TỰ</div></div>
+      <div id="codes" style="position:relative;height:130px;margin-top:30px"></div>
+    </div>
+    <div class="abs card step" id="x3" style="left:70px;top:1300px;width:940px;height:300px;background:var(--gold)">
+      <div class="num">03</div>
+      <div style="flex:1"><div class="anton" style="font-size:90px">MỞ QUÀ</div><div style="font-size:38px;font-weight:700;color:var(--ink)">ngay trên website</div></div>
+      <div id="x3gift" style="font-size:150px;line-height:1">🎁</div>
+    </div>
+  </div>
+
+  <!-- 8 THƯỞNG ĐẠI LÝ -->
+  <div class="scene" id="s8">
+    <div class="abs row kick" id="s8k" style="top:158px;font-size:44px;color:var(--gold)">VỀ PHẦN QUÝ ĐẠI LÝ</div>
+    <div class="abs row anton" id="s8h" style="top:250px;font-size:120px;color:var(--cream)">THƯỞNG DOANH SỐ</div>
+    <div class="abs chip" id="s8chip" style="left:120px;top:420px;width:840px;height:100px;background:rgba(255,255,255,.1);border:3px solid rgba(255,255,255,.35)">
+      <span style="font-size:42px;font-weight:800;color:#fff">Điểm <span style="color:var(--gold)">cộng dồn</span> suốt chương trình</span>
+    </div>
+    <div class="abs" style="left:60px;top:640px;width:960px;height:800px">
+      <div class="bar" id="b1" style="left:0;width:290px;height:220px;background:#3F5B4E;color:#cfd8d2">
+        <div class="anton" style="font-size:58px;line-height:1.05;text-align:center">KHÔNG<br>THƯỞNG</div>
+      </div>
+      <div class="bar" id="b2" style="left:330px;width:300px;height:470px;background:var(--cream)">
+        <div class="anton" id="b2v" style="font-size:68px;color:var(--green);white-space:nowrap">200.000đ</div>
+        <div style="font-size:40px;font-weight:800;color:var(--green)">/ điểm</div>
+      </div>
+      <div class="bar" id="b3" style="left:670px;width:290px;height:760px;background:var(--orange)">
+        <div class="anton" id="b3v" style="font-size:68px;color:#fff;white-space:nowrap">300.000đ</div>
+        <div style="font-size:40px;font-weight:800;color:#fff">/ điểm</div>
+      </div>
+    </div>
+    <div class="abs" style="left:60px;top:1440px;width:960px;height:6px;background:var(--cream)"></div>
+    <div class="abs anton" id="l1" style="left:60px;top:1462px;width:290px;text-align:center;font-size:50px;color:#9fb3a8">DƯỚI 5 ĐIỂM</div>
+    <div class="abs anton" id="l2" style="left:390px;top:1462px;width:300px;text-align:center;font-size:50px;color:var(--cream)">5 – 10 ĐIỂM</div>
+    <div class="abs anton" id="l3" style="left:730px;top:1462px;width:290px;text-align:center;font-size:50px;color:var(--gold)">TỪ 11 ĐIỂM</div>
+    <div class="abs" id="s8tag" style="left:110px;top:1560px;width:860px;height:120px;background:var(--gold);border:5px solid var(--ink);border-radius:24px;box-shadow:8px 10px 0 var(--ink);display:flex;align-items:center;justify-content:center">
+      <span class="anton" style="font-size:62px;color:var(--ink)">ÁP DỤNG CHO TOÀN BỘ SỐ ĐIỂM</span>
+    </div>
+    <div class="abs row" id="s8pay" style="top:1715px;font-size:38px;font-weight:600;color:var(--cream)">Thưởng chi trả trước 04.02.2027</div>
+  </div>
+
+  <!-- 9 1% – 1,5% -->
+  <div class="scene" id="s9">
+    <div class="abs row kick" id="s9k" style="top:420px;font-size:36px;letter-spacing:4px;color:var(--green);white-space:nowrap">TÍNH RA, QUÝ ĐẠI LÝ ĐƯỢC THƯỞNG THÊM</div>
+    <div class="abs row anton" style="top:520px;font-size:206px;color:var(--orange);white-space:nowrap">
+      <span id="s9n1" style="display:inline-block">1%</span> <span id="s9n2" style="display:inline-block">–</span> <span id="s9n3" style="display:inline-block">1,5%</span>
+    </div>
+    <div class="abs row anton" id="s9t" style="top:830px;font-size:110px;color:var(--green)">TRÊN DOANH SỐ</div>
+    <div class="abs" id="s9calc" style="left:140px;top:1060px;width:800px;padding:36px 0;background:#fff;border:5px solid var(--ink);border-radius:30px;box-shadow:8px 10px 0 var(--ink);text-align:center;font-size:46px;font-weight:700;line-height:1.6;color:#444">
+      200.000đ ÷ 20 triệu = <b style="color:var(--orange)">1%</b><br>300.000đ ÷ 20 triệu = <b style="color:var(--orange)">1,5%</b>
+    </div>
+  </div>
+
+  <!-- 10 BIÊN LỢI NHUẬN -->
+  <div class="scene" id="s10">
+    <div class="abs row anton" id="s10h" style="top:190px;font-size:110px;color:var(--orange)">QUAN TRỌNG HƠN</div>
+    <div class="abs row" id="s10a" style="top:340px;font-size:52px;font-weight:800;color:var(--ink)">Đại lý bán thêm được nhiều sản phẩm</div>
+    <div class="abs pill" id="s10pill" style="left:190px;top:440px;width:700px;height:170px;border:4px solid var(--ink)">
+      <img src="../assets/logo_rostar.png" style="height:100px"><div class="sep"></div><img src="../assets/logo_klv.png" style="height:82px">
+    </div>
+    <div class="abs kick row" id="s10m" style="top:690px;font-size:40px;color:var(--green)">BIÊN LỢI NHUẬN</div>
+    <!-- cột trái: hàng thịnh hành -->
+    <div class="abs" id="s10L" style="left:70px;top:770px;width:440px;height:880px;background:#E9E2D5;border:5px solid var(--ink);border-radius:34px;box-shadow:8px 10px 0 var(--ink)">
+      <div style="text-align:center;padding-top:30px;font-size:42px;font-weight:800;line-height:1.25;color:#555">Sản phẩm<br>đang thịnh hành</div>
+      <div style="position:absolute;left:30px;right:30px;top:200px;text-align:center;font-size:36px;font-weight:600;color:#777">bán nhiều, nhưng…</div>
+      <div id="s10Lbar" style="position:absolute;left:120px;width:200px;bottom:150px;height:140px;background:#B9B2A6;border:5px solid var(--ink);border-radius:20px 20px 0 0;transform-origin:50% 100%"></div>
+      <div style="position:absolute;left:30px;right:30px;bottom:146px;height:5px;background:var(--ink)"></div>
+      <div class="anton" id="s10Llb" style="position:absolute;left:0;right:0;bottom:40px;text-align:center;font-size:76px;color:#A23B2A">THẤP</div>
+    </div>
+    <!-- cột phải: ROSTAR & KLV -->
+    <div class="abs" id="s10R" style="left:570px;top:770px;width:440px;height:880px;background:var(--green);border:5px solid var(--ink);border-radius:34px;box-shadow:8px 10px 0 var(--ink)">
+      <div style="text-align:center;padding-top:30px;font-family:'Anton';font-size:80px;line-height:1.05;color:var(--gold)">ROSTAR<br>&amp; KLV</div>
+      <div id="s10Rbar" style="position:absolute;left:120px;width:200px;bottom:150px;height:420px;background:var(--gold);border:5px solid var(--ink);border-radius:20px 20px 0 0;transform-origin:50% 100%;display:flex;align-items:flex-start;justify-content:center;padding-top:20px;font-size:90px;color:var(--green2);font-weight:900">✓</div>
+      <div style="position:absolute;left:30px;right:30px;bottom:146px;height:5px;background:var(--cream)"></div>
+      <div class="anton" style="position:absolute;left:0;right:0;bottom:40px;text-align:center;font-size:76px;color:#fff">ỔN ĐỊNH</div>
+    </div>
+  </div>
+
+  <!-- 11 CÙNG CÓ LỢI -->
+  <div class="scene" id="s11">
+    <div class="abs full" id="s11A">
+      <div class="abs row anton" id="s11h" style="top:190px;font-size:116px;color:var(--gold)">QUÀ CỰC KỲ HẤP DẪN</div>
+      <div class="abs" id="s11vid" style="left:70px;top:350px;width:940px;height:700px;border:5px solid var(--ink);border-radius:34px;overflow:hidden;box-shadow:10px 12px 0 var(--ink);background:#2a1a0a">
+        <img id="s11frame" style="width:100%;height:100%;object-fit:cover;display:block">
+        <div style="position:absolute;left:0;right:0;bottom:0;height:120px;background:linear-gradient(transparent,rgba(0,0,0,.75))"></div>
+        <div style="position:absolute;left:0;right:0;bottom:22px;text-align:center;font-size:29px;font-weight:800;color:#fff;letter-spacing:0;white-space:nowrap">BIA TIGER COOL PACK · TIỀN MẶT · VOUCHER</div>
+      </div>
+      <div class="abs full" id="fly" style="pointer-events:none"></div>
+      <div class="abs card step" id="s11r1" style="left:70px;top:1110px;width:940px;height:230px">
+        <div style="flex:none;font-size:110px">📈</div>
+        <div><div class="anton" style="font-size:72px;color:var(--orange)">HIỆU ỨNG TỐT</div><div style="font-size:40px;font-weight:700">cho sản phẩm ROSTAR &amp; KLV</div></div>
+      </div>
+      <div class="abs card step" id="s11r2" style="left:70px;top:1390px;width:940px;height:230px">
+        <div style="flex:none;font-size:110px">👥</div>
+        <div><div class="anton" style="font-size:72px;color:var(--green)">THÊM KHÁCH HÀNG</div><div style="font-size:40px;font-weight:700">kéo về cho Quý Đại lý</div></div>
+      </div>
+    </div>
+    <div class="abs full" id="s11B">
+      <svg class="abs" style="left:0;top:0" width="1080" height="1920">
+        <polygon id="tri" points="540,560 230,1110 850,1110" fill="none" stroke="#E7AA2E" stroke-width="10" stroke-linejoin="round" stroke-dasharray="1900" stroke-dashoffset="1900"/>
+      </svg>
+      <div class="circ" id="c1n" style="left:400px;top:420px;background:var(--paper)"><img src="../assets/logo_rostar.png" style="width:220px"></div>
+      <div class="circ" id="c2n" style="left:90px;top:970px;background:var(--gold)"><div style="font-size:60px;line-height:1.1;margin-bottom:10px">🤝</div><div class="anton nofix" style="font-size:60px;line-height:1.3">ĐẠI LÝ</div></div>
+      <div class="circ" id="c3n" style="left:710px;top:970px;background:var(--orange)"><div style="font-size:60px;line-height:1.1;margin-bottom:14px">🏭</div><div class="anton nofix" style="font-size:60px;line-height:1.3;color:#fff">XƯỞNG</div></div>
+      <div class="abs row anton" id="s11mid" style="top:800px;font-size:84px;color:#fff;line-height:1;text-shadow:0 0 18px #1F4434,0 0 30px #1F4434">CÙNG<br>CÓ LỢI</div>
+      <div class="abs row" id="s11e1" style="top:1350px;font-size:56px;font-weight:800;color:var(--cream)">để chúng ta</div>
+      <div class="abs row anton" id="s11e2" style="top:1460px;font-size:120px;color:var(--gold)">CÙNG ĐI ĐƯỜNG DÀI</div>
+    </div>
+  </div>
+
+  <!-- 12 ĐẠI LÝ CẦN THỰC HIỆN -->
+  <div class="scene" id="s12">
+    <div class="abs row anton" id="s12h1" style="top:200px;font-size:120px;color:var(--ink)">ĐẠI LÝ</div>
+    <div class="abs row anton" id="s12h2" style="top:350px;font-size:120px;color:var(--orange)">CẦN THỰC HIỆN</div>
+    <div class="abs card step" id="k1" style="left:70px;top:560px;width:940px;height:300px">
+      <div class="num">01</div>
+      <div><div style="font-size:54px;font-weight:800">Phát đúng số phiếu</div>
+      <div style="font-size:38px;font-weight:500;color:#444;line-height:1.35;margin-top:8px">Ghi đủ số hóa đơn, tên xưởng và SĐT xưởng trước khi giao phiếu</div></div>
+    </div>
+    <div class="abs card step" id="k2" style="left:70px;top:910px;width:940px;height:300px">
+      <div class="num">02</div>
+      <div><div style="font-size:54px;font-weight:800">Giữ hóa đơn để đối soát</div>
+      <div style="font-size:38px;font-weight:500;color:#444;line-height:1.35;margin-top:8px">Gửi danh sách phiếu đã phát cho Sale Admin <b>2 tuần/lần</b></div></div>
+    </div>
+    <div class="abs card step" id="k3" style="left:70px;top:1260px;width:940px;height:330px">
+      <div class="num">03</div>
+      <div style="flex:1"><div style="font-size:50px;font-weight:800">Hướng dẫn xưởng quét QR</div>
+      <div style="font-size:38px;font-weight:500;color:#444;line-height:1.35;margin-top:8px">Nhập mã <b>8 ký tự</b>, chụp màn hình kết quả gửi Zalo ROSTAR</div></div>
+      <img src="../assets/qr.png" style="width:150px;height:150px;flex:none;border:4px solid var(--ink);border-radius:18px">
+    </div>
+  </div>
+
+  <!-- 13 LƯU Ý -->
+  <div class="scene" id="s13">
+    <div class="abs" id="s13box" style="left:60px;top:470px;width:960px;height:900px;background:var(--sand);border:5px solid var(--ink);border-radius:40px;box-shadow:10px 12px 0 var(--ink);padding:50px 56px">
+      <div class="anton" style="font-size:130px;text-align:center;color:var(--ink)">LƯU Ý</div>
+      <div style="height:5px;background:var(--ink);margin:20px 0 40px"></div>
+      <div class="note" id="n1"><span class="ic">📅</span><span>Doanh số được tính từ <b>10/10</b></span></div>
+      <div class="note" id="n2" style="margin-top:56px"><span class="ic">🚫</span><span>Chủ, người nhà, nhân viên đại lý <b>không được nhận giải</b> (khai báo trước SĐT)</span></div>
+      <div class="note" id="n3" style="margin-top:56px"><span class="ic">💰</span><span>Thưởng đại lý chi trả trước <b>04/02/2027</b></span></div>
+    </div>
+  </div>
+
+  <!-- 14 KẾT -->
+  <div class="scene" id="s14">
+    <div class="abs pill" id="s14pill" style="left:150px;top:380px;width:780px;height:200px">
+      <img src="../assets/logo_rostar.png" style="height:118px"><div class="sep"></div><img src="../assets/logo_klv.png" style="height:96px">
+    </div>
+    <div class="abs row" id="e1" style="top:700px;font-size:48px;font-weight:600;color:var(--cream)">Mọi thông tin chi tiết, xin liên hệ</div>
+    <div class="abs row" id="e2" style="top:790px;font-size:46px;font-weight:800;letter-spacing:16px;color:var(--orange)">HOTLINE</div>
+    <div class="abs row anton" id="e3" style="top:860px;font-size:150px;color:#fff">0819 157 576</div>
+    <div class="abs row anton" id="e4" style="top:1040px;font-size:150px;color:#fff">0935 000 176</div>
+    <div class="abs row anton" id="e5" style="top:1290px;font-size:104px;color:var(--gold)">TRÂN TRỌNG CẢM ƠN</div>
+    <div class="abs row anton" id="e6" style="top:1430px;font-size:104px;color:var(--gold)">QUÝ ĐẠI LÝ!</div>
+    <div class="abs row" id="e7" style="top:1600px;font-size:30px;font-weight:500;color:var(--cream);opacity:.85;line-height:1.5">ROSTAR Miền Trung · 425 Hoàng Văn Thái, Liên Chiểu, Đà Nẵng<br>rostar.vn</div>
+  </div>
+
+  <div class="abs mono" id="hdrL" style="left:70px;top:90px;font-size:28px">N° CTKM TẾT 2027</div>
+  <div class="abs mono" id="hdrR" style="right:70px;top:90px;font-size:28px">SERI Đ · ĐẠI LÝ</div>
+  <div class="progress" id="prog"><i id="progi"></i></div>
+</div>
+
+<script src="vo.js"></script>
+<script>
+// ---------- bố cục cảnh ----------
+const VO = window.VO_DUR;        // độ dài giọng đọc từng cảnh (giây), sinh từ file âm thanh
+const N = VO.length;
+const LEAD = [0.8,0.5,0.6,0.6,0.6,0.6,0.5,0.6,0.5,0.6,0.6,0.6,0.8,0.5];
+const TAIL = [0.4,0.4,0.5,0.5,0.5,0.5,0.4,0.5,0.6,0.6,0.6,0.5,1.4,2.4];
+const C={g:'#1F4434',o:'#EF6A12',c:'#F7F0E3'};
+const BG  = [C.g,C.g,C.c,C.g,C.o,C.c,C.g,C.g,C.c,C.c,C.g,C.c,C.g,C.g];
+const SC = []; let acc = 0;
+for (let i=0;i<N;i++){ const d=LEAD[i]+VO[i]+TAIL[i]; SC.push({start:acc, dur:d, vo:acc+LEAD[i]}); acc+=d; }
+const TOTAL = acc;
+window.TIMING = {total:TOTAL, scenes:SC};
+
+// ---------- helpers ----------
+const $ = id => document.getElementById(id);
+const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+const P=(t,a,d)=>clamp((t-a)/d);
+const eOut=x=>1-Math.pow(1-x,3);
+const eIO=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const eBack=x=>{const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2);};
+const lerp=(a,b,x)=>a+(b-a)*x;
+const fmt=n=>Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+function st(el,{x=0,y=0,s=1,r=0,o=1,b=0,sx=null,sy=null,ry=0}={}){
+  if(typeof el==='string') el=$(el);
+  const scl = (sx!==null||sy!==null)?`scale(${sx??s},${sy??s})`:`scale(${s})`;
+  el.style.transform=`translate(${x}px,${y}px) ${scl} rotate(${r}deg)` + (ry?` perspective(1400px) rotateY(${ry}deg)`:'');
+  el.style.opacity=o; el.style.filter=b>0.05?`blur(${b}px)`:'none';
+}
+function rise(el,t,a,d=0.55,dist=70){const k=P(t,a,d),e=eOut(k);st(el,{y:(1-e)*dist,o:e,b:(1-e)*10});}
+function pop(el,t,a,d=0.45,from=0.4){const k=P(t,a,d);st(el,{s:lerp(from,1,eBack(k)),o:clamp(k*3),b:(1-k)*6});}
+function slam(el,t,a,d=0.28,from=2.4,r0=-18,r1=0){const k=P(t,a,d),e=eOut(k);st(el,{s:lerp(from,1,e),r:lerp(r0,r1,e),o:clamp(k*2.5),b:(1-k)*8});}
+function slideX(el,t,a,d=0.55,dist=900){const k=P(t,a,d),e=eOut(k);st(el,{x:(1-e)*dist,o:clamp(k*2),b:(1-e)*18});}
+function punch(el,t,a,d=0.4,from=1.9){const k=P(t,a,d),e=eOut(k);st(el,{s:lerp(from,1,e),o:clamp(k*2),b:(1-e)*14});}
+function count(el,t,a,d,target,suffix=''){const k=eOut(P(t,a,d)); el.firstChild.nodeValue = fmt(target*k)+suffix;}
+function grow(id,t,a,d){const k=eOut(P(t,a,d)); const el=$(id); el.style.transformOrigin='50% 100%'; st(el,{sx:1,sy:k,o:k>0?1:0});}
+function phase(id,t,a,d=0.45,dy=-140){const k=eIO(P(t,a,d)); const el=$(id); el.style.opacity=1-k; el.style.transform=`translateY(${k*dy}px)`;}
+
+// Anton + dấu tiếng Việt: giãn dòng để dấu không lấn dòng trên / viền khung, giữ nguyên vị trí chân chữ
+document.querySelectorAll('.anton:not(.nofix)').forEach(el=>{
+  const cs=getComputedStyle(el), fs=parseFloat(cs.fontSize);
+  const old=parseFloat(cs.lineHeight)||fs*1.08, nl=fs*1.34;
+  el.style.lineHeight=nl+'px';
+  if(el.style.top && cs.position==='absolute'){ el.style.top=(parseFloat(el.style.top)-(nl-old)/2*1.0)+'px'; }
+});
+// ô mã 8 ký tự
+(()=>{const box=$('codes'); for(let i=0;i<8;i++){const d=document.createElement('div'); d.className='codebox'; d.id='cb'+i; d.style.left=(i*108)+'px'; d.textContent=''; box.appendChild(d);} })();
+const CODE='X7K2M9QA';
+// tiền & voucher bay
+const FLY=[]; (()=>{ const box=$('fly'); for(let i=0;i<12;i++){ const im=document.createElement('img'); im.src=i%3===2?'../assets/gift_voucher_t.png':'../assets/gift_cash_t.png';
+  im.style.cssText='position:absolute;left:0;top:0;width:'+(230+(i*37)%90)+'px;opacity:0;filter:drop-shadow(0 8px 10px rgba(0,0,0,.35))'; box.appendChild(im);
+  FLY.push({el:im,t0:1.0+i*0.28,x0:(i*173)%900-60,dir:i%2?1:-1,rot:(i*47)%60-30,dur:2.6+(i%4)*0.35}); } })();
+window.CLIP_N = 180;
+
+// ---------- các cảnh: (lt = thời gian trong cảnh, v = tính từ lúc giọng đọc bắt đầu) ----------
+const scenes = [
+  // 1
+  (lt,v)=>{ pop('s1pill',lt,0.1,0.6,0.6); rise('s1a',lt,0.5); rise('s1b',lt,0.7,0.6,90); rise('s1c',lt,0.95);
+            slam('s1stamp',lt,1.9,0.3,2.6,-34,-10); },
+  // 2
+  (lt,v)=>{ const k=P(lt,0,0.7),e=eOut(k); st('s2title',{s:lerp(1.7,1,e),o:k,b:(1-e)*22});
+            rise('s2sub',v,0.9); pop('s2w1',v,2.5,0.4); pop('s2w2',v,2.8,0.45);
+            pop('s2w3',v,3.25,0.4); pop('s2w4',v,3.5,0.4); pop('s2w5',v,3.75,0.45);
+            rise('s2tl',v,4.3); pop('s2d1',v,4.5,0.5,0.6);
+            const kl=eIO(P(v,6.6,1.0)); st('s2line',{sx:kl,sy:1,o:kl>0?1:0}); st('s2arrow',{o:P(v,7.4,0.2)});
+            pop('s2d2',v,7.6,0.5,0.6); rise('s2note',v,9.2); },
+  // 3
+  (lt,v)=>{ rise('s3k',v,0.0); punch('s3h',v,0.3,0.45,1.6); slam('s3eq',v,3.85,0.35,1.5,-3,0);
+            slideX('nd1',v,5.6,0.55,-900); rise('ar1',v,6.2,0.4,-30); slideX('nd2',v,6.4,0.55,900); rise('ar2',v,7.0,0.4,-30); slideX('nd3',v,7.2,0.55,-900);
+            rise('s3cap',v,8.6); },
+  // 4
+  (lt,v)=>{ rise('s4k',lt,0.05); punch('s4h',lt,0.2,0.4,1.5);
+            rise('s4l',v,1.3); count($('s4cnt'),v,1.5,1.8,20000000); $('s4cnt').style.opacity=P(v,1.5,0.3);
+            pop('s4eq',v,3.4,0.35,0.3); punch('s4p1',v,3.8,0.4,1.4);
+            pop('s4plus',v,5.4,0.3,0.3); { const k=P(v,5.7,0.45),e=eOut(k); st('s4p2',{x:(1-e)*-700,o:clamp(k*2),b:(1-e)*18}); } },
+  // 5
+  (lt,v)=>{ rise('s5h',lt,0.05);
+            ['t1','t2','t3','t4','t5'].forEach((id,i)=>{ const k=P(v,0.1+i*0.18,0.45); st(id,{s:lerp(0.3,1,eBack(k)),r:lerp(-25,(i-2)*3,eOut(k)),o:clamp(k*3)}); });
+            rise('s5inv',v,1.9,0.55,200); count($('s5cnt'),v,2.1,1.6,4000000,'đ');
+            // phiếu 01 rời hàng, bay xuống thẻ xưởng
+            { const k=eIO(P(v,5.5,0.7)); if(v>=5.5){ st('t1',{x:k*390,y:k*820,s:lerp(1,0.4,k),r:lerp(-6,20,k),o:1-k}); } }
+            { const ka=eOut(P(v,5.4,0.4)); st('s5arr',{y:(1-ka)*-30,o:ka,sy:ka}); }
+            { const kt=P(v,5.9,0.7),et=eBack(kt); st('s5x',{ry:lerp(95,0,clamp(et,0,1.1)),o:clamp(kt*3),s:lerp(.85,1,eOut(kt))}); }
+            rise('s5math',v,6.9); punch('s5win',v,8.0,0.45,1.6); },
+  // 6
+  (lt,v)=>{ slam('s6pill',v,0.0,0.3,2.2,-6,-2);
+            rise('s6box',v,2.4,0.55,200); count($('s6cnt'),v,2.6,1.3,5000000);
+            pop('g1',v,4.5,0.45); pop('g2',v,6.9,0.45); pop('g3',v,11.2,0.45); pop('g4',v,12.0,0.45);
+            punch('s6foot',v,13.3,0.45,1.5); },
+  // 7
+  (lt,v)=>{ rise('s7k',lt,0.05); punch('s7h',lt,0.2,0.4,1.5);
+            slideX('x1',v,0.1); slideX('x2',v,1.6); slideX('x3',v,3.5);
+            for(let i=0;i<8;i++){ const k=P(v,2.0+i*0.14,0.12); const el=$('cb'+i); el.textContent = k>0.5?CODE[i]:''; el.style.borderColor = k>0.5?'#EF6A12':'#1B1B1B'; }
+            { const k=P(v,3.9,0.5); st('x3gift',{s:lerp(0.3,1,eBack(k)),r:Math.sin(v*6)*6*(k),o:clamp(k*3)}); } },
+  // 8
+  (lt,v)=>{ rise('s8k',v,0.0); punch('s8h',v,0.2,0.4,1.4); rise('s8chip',v,1.2,0.5,-50);
+            grow('b1',v,2.6,0.5); rise('l1',v,2.7,0.4,30);
+            grow('b2',v,2.9,0.8); rise('l2',v,3.0,0.4,30); count($('b2v'),v,3.8,1.2,200000,'đ'); $('b2v').style.opacity=P(v,3.8,0.2);
+            grow('b3',v,6.7,0.9); rise('l3',v,6.8,0.4,30); count($('b3v'),v,7.9,1.2,300000,'đ'); $('b3v').style.opacity=P(v,7.9,0.2);
+            const hl2=P(v,3.2,0.3)*(1-P(v,6.5,0.3)), hl3=P(v,6.9,0.3);
+            $('b2').style.boxShadow=`0 0 0 ${hl2*10}px rgba(231,170,46,.55)`;
+            $('b3').style.boxShadow=`0 0 0 ${hl3*10}px rgba(255,255,255,.35)`;
+            slam('s8tag',v,9.3,0.3,1.8,-4,0); rise('s8pay',v,9.9); },
+  // 9
+  (lt,v)=>{ rise('s9k',v,0.0);
+            punch('s9n1',v,2.6,0.35,2.2); pop('s9n2',v,3.1,0.3,0.2);
+            { const k=P(v,3.4,0.35),e=eOut(k); const drift=0.05*eOut(P(v,3.75,4)); st('s9n3',{s:lerp(2.2,1,e)+drift,o:clamp(k*2),b:(1-e)*14}); }
+            rise('s9t',v,4.4); rise('s9calc',v,5.0,0.6,120); },
+  // 10
+  (lt,v)=>{ punch('s10h',v,0.0,0.4,1.6); rise('s10a',v,2.8); pop('s10pill',v,3.4,0.55,0.6);
+            rise('s10m',v,6.6); rise('s10R',v,6.8,0.6,200); grow('s10Rbar',v,7.2,0.9);
+            rise('s10L',v,8.4,0.6,200); { const k=eOut(P(v,9.4,1.0)); const el=$('s10Lbar'); el.style.transformOrigin='50% 100%'; st(el,{sx:1,sy:lerp(0,1,k),o:k>0?1:0}); }
+            slam('s10Llb',v,10.3,0.3,1.8,-6,-3); },
+  // 11
+  (lt,v)=>{ punch('s11h',v,0.0,0.4,1.5); pop('s11vid',lt,0.2,0.5,0.85);
+            { const k=eIO(P(v,4.4,0.7)); const el=$('s11vid'); el.style.left=lerp(140,70,k)+'px'; el.style.top=lerp(330,350,k)+'px'; el.style.width=lerp(800,940,k)+'px'; el.style.height=lerp(1290,700,k)+'px'; $('s11frame').style.objectPosition='50% '+lerp(50,62,k)+'%'; }
+            if(window.CLIP_N){ const f=Math.min(window.CLIP_N, Math.max(1, Math.floor((lt-0.2)*30)+1)); const im=$('s11frame'); const src='clip/f'+String(f).padStart(4,'0')+'.jpg';
+              if(im.getAttribute('src')!==src){ im.setAttribute('src',src); window.PENDING=im.decode().catch(()=>{}); } }
+            FLY.forEach(p=>{ const k=(v-p.t0)/p.dur; if(k<0||k>1){p.el.style.opacity=0;return;}
+              const x=p.x0+Math.sin(k*Math.PI*2.2+p.t0)*90*p.dir, y=1150-k*1000+Math.sin(k*9+p.t0)*25;
+              p.el.style.opacity=Math.min(1,k*6,(1-k)*5); p.el.style.transform=`translate(${x}px,${y}px) rotate(${p.rot+Math.sin(k*8+p.t0)*35}deg) scale(${0.8+0.3*Math.sin(k*5+p.t0)})`; });
+            slideX('s11r1',v,4.9); slideX('s11r2',v,7.8,0.55,-900);
+            phase('s11A',v,10.45,0.4);
+            $('s11B').style.opacity=P(v,10.55,0.2);
+            const kt=eIO(P(v,10.65,1.2)); $('tri').setAttribute('stroke-dashoffset', String(1900*(1-kt)));
+            pop('c1n',v,10.65,0.5,0.4); pop('c2n',v,10.95,0.5,0.4); pop('c3n',v,11.25,0.5,0.4);
+            punch('s11mid',v,11.7,0.4,1.8); rise('s11e1',v,12.3); punch('s11e2',v,12.7,0.45,1.5); },
+  // 12
+  (lt,v)=>{ rise('s12h1',lt,0.05); rise('s12h2',lt,0.25);
+            const T=window.S12; slideX('k1',v,T[0]); slideX('k2',v,T[1]); slideX('k3',v,T[2]);
+            const act=[[T[0],T[1]],[T[1],T[2]],[T[2],99]];
+            ['k1','k2','k3'].forEach((id,i)=>{ const on=v>=act[i][0]&&v<act[i][1]; const el=$(id);
+              el.style.borderColor=on?'#EF6A12':'#1B1B1B'; el.style.boxShadow=on?'10px 12px 0 #EF6A12':'10px 12px 0 #1B1B1B'; }); },
+  // 13
+  (lt,v)=>{ rise('s13box',lt,0.05,0.6,200); const T=window.S13;
+            rise('n1',v,T[0],0.5,40); rise('n2',v,T[1],0.5,40); rise('n3',v,T[2],0.5,40); },
+  // 14
+  (lt,v)=>{ pop('s14pill',lt,0.0,0.55,0.6); rise('e1',v,0.0); rise('e2',v,0.4); pop('e3',v,0.8,0.45,0.6); pop('e4',v,1.2,0.45,0.6);
+            rise('e5',v,window.S14,0.6,80); rise('e6',v,window.S14+0.3,0.6,80); rise('e7',v,window.S14+1.0); },
+];
+
+// ---------- render ----------
+const HDR = c => c===C.c ? '#EF6A12' : (c===C.o ? '#1B1B1B' : '#E7AA2E');
+function render(t){
+  let idx=SC.findIndex(s=>t>=s.start && t<s.start+s.dur); if(idx<0) idx=SC.length-1;
+  const s=SC[idx], lt=t-s.start, v=(t-s.vo)*window.SPD*window.F[idx];
+  $('bgBase').style.background = idx>0?BG[idx-1]:BG[0];
+  const w=$('wipe'); w.style.background=BG[idx];
+  const kw=idx===0?1:eIO(P(lt,0,0.6)); w.style.clipPath=`circle(${kw*1150}px at 540px 960px)`;
+  $('dots').style.color = BG[idx]===C.g?'#fff':'#000';
+  $('hdrL').style.color=HDR(BG[idx]); $('hdrR').style.color=HDR(BG[idx]);
+  for(let i=0;i<N;i++) $('s'+(i+1)).style.opacity=0;
+  const el=$('s'+(idx+1));
+  const kin=idx===0?1:eOut(P(lt,0.15,0.4));
+  const kout=idx===N-1?0:eIO(P(lt,s.dur-0.35,0.35));
+  const push = 1 + 0.025*(lt/s.dur);
+  el.style.opacity=kin*(1-kout);
+  el.style.transform=`scale(${(lerp(0.96,1,kin))*push*(1+kout*0.06)})`;
+  el.style.filter=kout>0.02?`blur(${kout*8}px)`:'none';
+  scenes[idx](lt,v);
+  if(idx===0){ const k=P(lt,2.18,0.3); if(k>0&&k<1){ const a=(1-k)*14; el.style.transform+=` translate(${Math.sin(k*60)*a}px,${Math.cos(k*47)*a}px)`; } }
+  if(idx===5){ const k=P(v,0.28,0.25); if(k>0&&k<1){ const a=(1-k)*10; el.style.transform+=` translate(${Math.sin(k*60)*a}px,0)`; } }
+  const endk=P(t,TOTAL-0.8,0.8); $('stage').style.filter=endk>0?`brightness(${1-endk})`:'none';
+  $('progi').style.width=(100*clamp(t/TOTAL))+'%';
+  $('prog').style.background = (BG[idx]===C.c)?'rgba(0,0,0,.12)':'rgba(255,255,255,.18)';
+}
+window.render=render;
+
+// ---------- hiệu ứng âm thanh ----------
+const S=i=>SC[i]; const VT=(i,x)=>SC[i].vo + x/(window.SPD*window.F[i]);
+window.SFX=[
+  ...SC.slice(1).map(s=>({t:s.start,k:'whoosh'})),
+  {t:0.1,k:'pop'},{t:2.15,k:'stamp'},
+  {t:VT(1,(2.5)),k:'pop'},{t:VT(1,(3.25)),k:'pop'},{t:VT(1,(4.5)),k:'pop'},{t:VT(1,(7.6)),k:'pop'},
+  {t:VT(2,(0.3)),k:'stamp'},{t:VT(2,(3.9)),k:'stamp'},{t:VT(2,(5.6)),k:'whoosh'},{t:VT(2,(6.4)),k:'whoosh'},{t:VT(2,(7.2)),k:'whoosh'},
+  {t:S(3).start+0.2,k:'stamp'},{t:VT(3,(3.3)),k:'ding'},{t:VT(3,(3.8)),k:'stamp'},{t:VT(3,(5.7)),k:'stamp'},
+  {t:VT(4,(0.1)),k:'pop'},{t:VT(4,(0.28)),k:'pop'},{t:VT(4,(0.46)),k:'pop'},{t:VT(4,(0.64)),k:'pop'},{t:VT(4,(0.82)),k:'pop'},
+  {t:VT(4,(3.7)),k:'ding'},{t:VT(4,(5.5)),k:'whoosh'},{t:VT(4,(5.9)),k:'flip'},{t:VT(4,(8.0)),k:'stamp'},
+  {t:VT(5,(0.2)),k:'stamp'},{t:VT(5,(3.9)),k:'cash'},{t:VT(5,(4.5)),k:'pop'},{t:VT(5,(6.9)),k:'pop'},{t:VT(5,(11.2)),k:'pop'},{t:VT(5,(12.0)),k:'pop'},
+  {t:VT(6,(0.1)),k:'whoosh'},{t:VT(6,(1.6)),k:'whoosh'},...[0,1,2,3,4,5,6,7].map(i=>({t:VT(6,(2.0+i*0.14)),k:'pop'})),{t:VT(6,(3.9)),k:'ding'},
+  {t:VT(7,(2.9)),k:'whoosh'},{t:VT(7,(4.6)),k:'ding'},{t:VT(7,(7.9)),k:'cash'},{t:VT(7,(9.3)),k:'stamp'},
+  {t:VT(8,(2.6)),k:'stamp'},{t:VT(8,(3.4)),k:'stamp'},
+  {t:VT(9,(3.4)),k:'pop'},{t:VT(9,(7.2)),k:'ding'},{t:VT(9,(10.3)),k:'stamp'},
+  {t:VT(10,(1.2)),k:'cash'},{t:VT(10,(4.9)),k:'whoosh'},{t:VT(10,(7.8)),k:'whoosh'},
+  {t:VT(10,(10.65)),k:'pop'},{t:VT(10,(10.95)),k:'pop'},{t:VT(10,(11.25)),k:'pop'},{t:VT(10,(11.7)),k:'stamp'},
+];
+window.SFX.push(...window.S12.map(x=>({t:VT(11,(x)),k:'whoosh'})), ...window.S13.map(x=>({t:VT(12,(x)),k:'pop'})),
+  {t:VT(13,(0.8)),k:'pop'},{t:VT(13,(1.2)),k:'pop'},{t:VT(13,(window.S14)),k:'ding'});
+document.fonts.ready.then(()=>{ window.READY=true; render(0); });
+</script>
+</body>
+</html>
