@@ -1,0 +1,6 @@
+motion*/visual*.mp4
+motion*/seg*.mp4
+motion*/render.log
+motion*/seg.log
+motion*/preview_*.png
+motion*/ts.txt

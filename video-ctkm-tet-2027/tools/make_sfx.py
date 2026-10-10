@@ -34,4 +34,5 @@ tt = t(1.2); save('clink', sum(a*np.sin(2*np.pi*f*tt)*np.exp(-tt*d) for f, a, d 
 tt = t(3.0); n = rng.standard_normal(len(tt)); b = (rng.random(len(tt)) < 0.004)*rng.random(len(tt))
 fizz = np.diff(n, prepend=0)*0.15 + np.convolve(b, np.exp(-np.arange(200)/30), 'same')*np.sign(rng.standard_normal(len(tt)))
 save('fizz', fizz*np.minimum(1, tt/0.3)*np.minimum(1, (3.0-tt)/0.6))
+tt = t(0.09); save('tick', (np.sin(2*np.pi*1900*tt)*0.6+lp(rng.standard_normal(len(tt)), 0.7)*0.8)*np.exp(-tt*70))
 print('đã tạo SFX trong', out)

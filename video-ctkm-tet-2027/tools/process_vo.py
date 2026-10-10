@@ -15,6 +15,10 @@ KEYS = ['ĐƠN GIẢN', 'HAI MƯƠI TRIỆU', 'MỘT ĐIỂM THƯỞNG', 'NĂM P
         'TOÀN BỘ SỐ ĐIỂM', 'ỔN ĐỊNH', 'LẠI THẤP', 'CỰC KỲ HẤP DẪN', 'CÙNG CÓ LỢI', 'ĐƯỜNG DÀI', 'QUÀ THẢ GA',
         'KHÁCH HÀNG CỦA QUÝ ĐẠI LÝ', 'TRI ÂN', 'TÁM KÝ TỰ', 'KHÔNG THUỘC', 'HIỆU ỨNG TỐT', 'KÉO THÊM KHÁCH HÀNG']
 
+import os as _os
+if _os.environ.get('PV_KEYS'):
+    KEYS = KEYS + [l.strip().upper() for l in open(_os.environ['PV_KEYS'], encoding='utf-8') if l.strip()]
+
 def load(f):
     pcm = subprocess.run(['ffmpeg', '-v', 'error', '-i', f, '-ac', '1', '-ar', str(SR), '-f', 's16le', '-'], capture_output=True).stdout
     return np.frombuffer(pcm, dtype='<i2').astype(np.float32) / 32768

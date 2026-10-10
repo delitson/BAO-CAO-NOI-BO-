@@ -4,7 +4,7 @@ import sys, json, subprocess
 
 timing, vdir, sdir, music, out = sys.argv[1:6]
 T = json.load(open(timing)); total = T['total']
-VOL = {'stamp': 0.5, 'pop': 0.22, 'whoosh': 0.28, 'flip': 0.5, 'ding': 0.2, 'cash': 0.32, 'fizz': 0.35, 'clink': 0.45}
+VOL = {'tick': 0.35, 'stamp': 0.5, 'pop': 0.22, 'whoosh': 0.28, 'flip': 0.5, 'ding': 0.2, 'cash': 0.32, 'fizz': 0.35, 'clink': 0.45}
 inputs, flt = [], []
 for i, s in enumerate(T['scenes']):
     inputs += ['-i', f'{vdir}/d{i+1:02d}.wav']; d = int(s['vo'] * 1000)
@@ -17,7 +17,8 @@ for j, e in enumerate(T['sfx']):
     flt.append(f"[{k}:a]aresample=48000,aformat=channel_layouts=stereo,volume={VOL[e['k']]},adelay={d}|{d}[x{j}]"); labs.append(f'[x{j}]'); k += 1
 flt.append(''.join(labs) + f"amix=inputs={len(labs)}:normalize=0,apad,atrim=0:{total:.3f}[sfx]")
 inputs += ['-i', music]
-flt.append(f"[{k}:a]aresample=48000,aformat=channel_layouts=stereo,atrim=0:{total:.3f},volume=0.30,afade=t=in:d=0.8,afade=t=out:st={total-3:.3f}:d=3[mus]")
+ms = int(T.get('musicStart', 0) * 1000)
+flt.append(f"[{k}:a]aresample=48000,aformat=channel_layouts=stereo,atrim=0:{total:.3f},volume=0.30,afade=t=in:d=0.8,adelay={ms}|{ms},atrim=0:{total:.3f},afade=t=out:st={total-3:.3f}:d=3[mus]")
 flt.append("[vo]asplit=2[vo1][vosc]")
 flt.append("[mus][vosc]sidechaincompress=threshold=0.03:ratio=6:attack=40:release=500[mduck]")
 flt.append("[vo1][sfx][mduck]amix=inputs=3:normalize=0,loudnorm=I=-15:TP=-1.5:LRA=9[out]")
