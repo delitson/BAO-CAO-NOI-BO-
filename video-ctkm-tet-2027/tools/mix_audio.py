@@ -17,8 +17,9 @@ for j, e in enumerate(T['sfx']):
     flt.append(f"[{k}:a]aresample=48000,aformat=channel_layouts=stereo,volume={VOL[e['k']]},adelay={d}|{d}[x{j}]"); labs.append(f'[x{j}]'); k += 1
 flt.append(''.join(labs) + f"amix=inputs={len(labs)}:normalize=0,apad,atrim=0:{total:.3f}[sfx]")
 inputs += ['-i', music]
+MV = float(__import__('os').environ.get('MUSIC_VOL', '0.30'))
 ms = int(T.get('musicStart', 0) * 1000)
-flt.append(f"[{k}:a]aresample=48000,aformat=channel_layouts=stereo,atrim=0:{total:.3f},volume=0.30,afade=t=in:d=0.8,adelay={ms}|{ms},atrim=0:{total:.3f},afade=t=out:st={total-3:.3f}:d=3[mus]")
+flt.append(f"[{k}:a]aresample=48000,aformat=channel_layouts=stereo,atrim=0:{total:.3f},volume={MV},afade=t=in:d=0.8,adelay={ms}|{ms},atrim=0:{total:.3f},afade=t=out:st={total-3:.3f}:d=3[mus]")
 flt.append("[vo]asplit=2[vo1][vosc]")
 flt.append("[mus][vosc]sidechaincompress=threshold=0.03:ratio=6:attack=40:release=500[mduck]")
 flt.append("[vo1][sfx][mduck]amix=inputs=3:normalize=0,loudnorm=I=-15:TP=-1.5:LRA=9[out]")

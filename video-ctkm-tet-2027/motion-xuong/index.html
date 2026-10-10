@@ -109,10 +109,11 @@
   <!-- 2 NIỀM TIN → GIÁ TRỊ, tên chương trình, 2.000 quà -->
   <div class="scene" id="s2">
     <div class="abs full" id="s2A">
-      <div class="abs row kick" id="nt0" style="top:560px;font-size:44px;color:var(--ink)">ANH EM ĐÃ TRAO CHO CHÚNG TÔI</div>
-      <div class="abs row anton" id="nt1" style="top:640px;font-size:200px;color:var(--cream)">NIỀM TIN</div>
-      <div class="abs row anton" id="nt2" style="top:930px;font-size:200px;color:var(--ink)">GIÁ TRỊ</div>
-      <div class="abs row" id="ntA" style="top:880px;font-size:70px;color:var(--gold);font-weight:900">⇅</div>
+      <div class="abs row kick" id="nt0" style="top:550px;font-size:38px;letter-spacing:6px;white-space:nowrap;color:var(--ink)">ANH EM ĐÃ TRAO CHO CHÚNG TÔI</div>
+      <div class="abs row anton" id="nt1" style="top:620px;font-size:200px;color:var(--cream)">NIỀM TIN</div>
+      <div class="abs row" id="ntA" style="top:920px;font-size:90px;color:var(--gold);font-weight:900">⇅</div>
+      <div class="abs row kick" id="nt3" style="top:1080px;font-size:38px;letter-spacing:6px;white-space:nowrap;color:var(--ink)">ROSTAR TRAO LẠI CHO ANH EM</div>
+      <div class="abs row anton" id="nt2" style="top:1150px;font-size:220px;color:var(--ink)">GIÁ TRỊ</div>
     </div>
     <div class="abs full" id="s2B">
       <div class="abs row anton" id="p0" style="top:210px;font-size:200px;color:var(--cream)">THÔNG BÁO</div>
@@ -206,12 +207,28 @@
 
   <!-- 7 MẠ ANODE: BỀN MÀU – KHÔNG BONG TRÓC -->
   <div class="scene" id="s7">
-    <div class="abs" id="pf" style="left:140px;top:200px;width:800px;height:520px;background:var(--paper);border:6px solid var(--ink);border-radius:34px;box-shadow:10px 12px 0 var(--ink);overflow:hidden">
-      <img id="pfimg" src="../assets/gift_hinge.png" style="position:absolute;left:50%;top:46%;height:380px;transform:translate(-50%,-50%)">
-      <div class="abs pill" style="left:200px;bottom:26px;width:400px;height:96px;box-shadow:none;border:3px solid var(--ink)"><img src="../assets/logo_rostar.png" style="height:60px"><div class="sep" style="height:50px"></div><img src="../assets/logo_klv.png" style="height:50px"></div>
+    <div class="abs" id="pf" style="left:140px;top:190px;width:800px;height:540px;background:var(--paper);border:6px solid var(--ink);border-radius:34px;box-shadow:10px 12px 0 var(--ink);overflow:hidden">
+      <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,#fff 0,rgba(255,255,255,0) 62%)"></div>
+      <img id="pfimg" src="../assets/gift_hinge.png" style="position:absolute;left:50%;top:47%;height:430px;transform:translate(-50%,-50%)">
+      <div id="shine" style="position:absolute;top:-40%;left:0;width:130px;height:180%;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.75),rgba(255,255,255,0))"></div>
     </div>
-    <div class="abs row kick" id="cmpk" style="top:770px;font-size:40px;color:var(--ink)">MẶT CẮT LỚP BỀ MẶT</div>
-    <div class="abs" id="cA" style="left:70px;top:840px;width:450px;height:560px;background:var(--ink);border:5px solid var(--ink);border-radius:30px;box-shadow:8px 10px 0 rgba(0,0,0,.35)">
+    <div class="abs pill" id="pfl" style="left:340px;top:684px;width:400px;height:92px;background:var(--paper);border:5px solid var(--ink)"><img src="../assets/logo_rostar.png" style="height:58px"><div class="sep" style="height:48px"></div><img src="../assets/logo_klv.png" style="height:48px"></div>
+    <div class="abs" id="sp0" style="left:80px;top:150px;font-size:70px;color:var(--gold)">✦</div>
+    <div class="abs" id="sp1" style="left:930px;top:240px;font-size:52px;color:var(--cream)">✦</div>
+    <div class="abs" id="sp2" style="left:950px;top:600px;font-size:76px;color:var(--gold)">✦</div>
+    <div class="abs" id="sp3" style="left:70px;top:640px;font-size:48px;color:var(--cream)">✦</div>
+    <div class="abs full" id="s7Z">
+      <div class="abs row kick" id="z0" style="top:900px;font-size:44px;color:var(--ink)">BỞI VỚI</div>
+      <div class="abs row anton" id="z1" style="top:960px;font-size:150px;color:var(--cream)">ROSTAR &amp; KLV</div>
+    </div>
+    <div class="abs full" id="s7A">
+      <div class="abs row kick" id="h0" style="top:850px;font-size:44px;color:var(--ink)">ANH EM KHÔNG CHỈ</div>
+      <div class="abs row anton" id="h1" style="top:910px;font-size:150px;color:var(--cream)">NHẬN QUÀ</div>
+      <div class="abs row kick" id="h2" style="top:1150px;font-size:44px;color:var(--ink)">MÀ CÒN NHẬN</div>
+      <div class="abs row anton" id="h3" style="top:1210px;font-size:112px;color:var(--ink)">ĐÚNG THỨ MÌNH CẦN</div>
+    </div>
+    <div class="abs row kick" id="cmpk" style="top:800px;font-size:40px;color:var(--ink)">MẶT CẮT LỚP BỀ MẶT</div>
+    <div class="abs" id="cA" style="left:70px;top:870px;width:450px;height:560px;background:var(--ink);border:5px solid var(--ink);border-radius:30px;box-shadow:8px 10px 0 rgba(0,0,0,.35)">
       <div class="anton nofix" style="text-align:center;font-size:66px;line-height:1.35;color:var(--gold);margin-top:22px">MẠ ANODE</div>
       <div style="position:absolute;left:40px;right:40px;top:170px;height:200px;border-radius:14px;overflow:hidden">
         <div style="position:absolute;inset:0;background:linear-gradient(#c9ccd2,#9aa0a8)"></div>
@@ -220,7 +237,7 @@
       <div style="position:absolute;left:30px;right:30px;top:390px;text-align:center;font-size:34px;font-weight:700;color:#e9e3d6;line-height:1.35">Lớp oxit <b style="color:var(--gold)">liền khối</b><br>với nhôm</div>
       <div id="okA" style="position:absolute;left:50%;bottom:-48px;width:96px;height:96px;margin-left:-48px;border-radius:50%;background:var(--gold);border:5px solid var(--ink);display:flex;align-items:center;justify-content:center;font-size:58px;font-weight:900">✓</div>
     </div>
-    <div class="abs" id="cB" style="left:560px;top:840px;width:450px;height:560px;background:#fff;border:5px solid var(--ink);border-radius:30px;box-shadow:8px 10px 0 rgba(0,0,0,.35)">
+    <div class="abs" id="cB" style="left:560px;top:870px;width:450px;height:560px;background:#fff;border:5px solid var(--ink);border-radius:30px;box-shadow:8px 10px 0 rgba(0,0,0,.35)">
       <div class="anton nofix" style="text-align:center;font-size:54px;line-height:1.35;color:#555;margin-top:28px">SƠN TĨNH ĐIỆN</div>
       <div style="position:absolute;left:40px;right:40px;top:170px;height:200px;border-radius:14px;overflow:visible">
         <div style="position:absolute;inset:0;border-radius:14px;background:linear-gradient(#c9ccd2,#9aa0a8)"></div>

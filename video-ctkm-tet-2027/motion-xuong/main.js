@@ -79,8 +79,7 @@ const scenes = [
   // 2 — NIỀM TIN ⇄ GIÁ TRỊ, rồi tên chương trình, thời gian, gần 2.000 quà
   (lt,v)=>{
     const S=2; rise('nt0',v,-0.1,0.45,40); punch('nt1',v,A(S,'nt')-0.05,0.4,1.7);
-    { const k=eIO(P(v,A(S,'nt')+0.55,0.9)); const a=k*Math.PI;
-      st('nt2',{x:Math.sin(a)*-260,y:-290*k,o:P(v,A(S,'nt')+0.3,0.3)}); st('nt1',{x:Math.sin(a)*260,y:290*k,o:1}); st('ntA',{o:P(v,A(S,'nt')+0.3,0.3)*(1-k),s:1}); }
+    pop('ntA',v,A(S,'tl')-0.35,0.4,0.4); rise('nt3',v,A(S,'tl')-0.2,0.4,30); slam('nt2',v,A(S,'gt')-0.05,0.3,1.8,-4,0);
     phase('s2A',v,A(S,'B')-0.25,0.35); $('s2B').style.opacity=P(v,A(S,'B')-0.1,0.2);
     { const k=P(v,A(S,'B')-0.1,0.5),e=eOut(k); st('p0',{s:lerp(1.5,1,e),o:k,b:(1-e)*16}); }
     pop('d1',v,A(S,'d1'),0.45,0.6); { const k=eIO(P(v,A(S,'d1')+0.3,0.6)); st('dl',{sx:k,sy:1,o:k>0?1:0}); } pop('d2',v,A(S,'d1')+0.8,0.45,0.6);
@@ -130,8 +129,14 @@ const scenes = [
   },
   // 7 — khung sản phẩm + mặt cắt anode vs sơn tĩnh điện
   (lt,v)=>{
-    const S=7; rise('pf',v,-0.2,0.55,160); { const k=P(v,0,6); $('pfimg').style.transform=`translate(-50%,-50%) scale(${1+0.08*k}) rotate(${-3+6*k}deg)`; }
-    rise('cmpk',v,A(S,'ma')-0.6,0.4,30); rise('cA',v,A(S,'ma')-0.4,0.55,160); rise('cB',v,A(S,'ma')-0.2,0.55,160);
+    const S=7; rise('pf',v,-0.2,0.55,160); pop('pfl',v,0.3,0.45,0.5);
+    { const k=((v+0.4)%2.2)/2.2; st('shine',{x:lerp(-260,1000,eIO(clamp(k*1.6))),r:20,o:1}); }
+    for(let i=0;i<4;i++){ const ph=v*2.2+i*1.7; st('sp'+i,{s:(0.55+0.45*Math.abs(Math.sin(ph)))*clamp(P(v,0.2+i*0.15,0.4)*1),r:v*40+i*30,o:clamp(P(v,0.2+i*0.15,0.4))}); }
+    rise('z0',v,0.0,0.4,30); punch('z1',v,0.25,0.4,1.7); phase('s7Z',v,A(S,'kc')-0.35,0.3,-120);
+    rise('h0',v,A(S,'kc')-0.15,0.4,30); punch('h1',v,A(S,'kc')+0.3,0.4,1.7);
+    rise('h2',v,A(S,'nd')-0.25,0.4,30); slam('h3',v,A(S,'nd')+0.1,0.3,1.8,-3,0);
+    phase('s7A',v,A(S,'ma')-0.55,0.3,-120); { const k=P(v,0,6); $('pfimg').style.transform=`translate(-50%,-50%) scale(${1+0.08*k}) rotate(${-3+6*k}deg)`; }
+    rise('cmpk',v,A(S,'ma')-0.35,0.4,30); rise('cA',v,A(S,'ma')-0.25,0.5,160); rise('cB',v,A(S,'ma')-0.05,0.5,160);
     st('anoL',{sx:1,sy:eOut(P(v,A(S,'ma'),0.6)),o:1}); pop('okA',v,A(S,'ben')-0.1,0.4,0.3);
     { const k=eIO(P(v,A(S,'bong'),0.8)); st('peel',{r:-38*k,y:-30*k,x:12*k,o:1}); }
     punch('bm',v,A(S,'bong')+0.2,0.45,1.5); rise('yt',v,A(S,'lap')-0.1,0.45,40);
